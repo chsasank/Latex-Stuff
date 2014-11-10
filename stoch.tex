@@ -1,0 +1,445 @@
+\documentclass[11pt]{article}
+\usepackage{geometry}
+\geometry{
+a4paper,
+total={210mm,297mm},
+left=1in,
+right=1in,
+top=1in,
+bottom=1in,
+}
+\usepackage{graphicx}
+\usepackage{todonotes}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{enumerate}
+\usepackage{cite}
+
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\supp}{\operatorname{supp}}
+\newtheorem{thm}{Theroem}
+\newtheorem{defn}{Defintion}
+\newtheorem{lemma}{Lemma}
+\newtheorem{prop}{Property}
+\newtheorem{claim}{claim}
+
+%\usepackage{tgpagella}
+%\usepackage[T1]{fontenc}
+
+\begin{document}
+
+	\title{Review of Provable Bounds for Learning Some Deep Representations\cite{main}}
+	\author{Sasank Chilamkurthy}
+	\date{\today}
+
+	\maketitle
+	\begin{abstract}
+		In \cite{main}, Authors give provable bounds for a algorithm to learn a interesting family of deep neural networks using properties of Random graphs and leveraging sparsity assumptions of this family.
+		We summarize \cite{main} and explain its main contributions.
+	\end{abstract}
+	\section{Introduction}
+	Deep Neural Nets have been very successful in tasks like vision, speech processing etc. Like many ML tasks, learning deep nets is NP-hard and need nonlinear optimization of many variables. Usually one imagines that this is not really a barrier to provable algorithms as inputs to learner are drawn from simple distributions and are not worst case. 
+	Provable guarantees for learning were given recently in case of generative models like HMMs, Gaussian Mixtures, LDA etc.\cite{hkz12,mv10,hk13,agm12,afh12} However, supervised learning of neural nets even on random inputs still seems as hard as cryptographic schemes.\cite{jks02,ks09}
+	
+	However, modern deep nets are not ``just" neural nets. (see \cite{ben09})
+	Instead the net is also seen as generative model for as generative model for input distribution when run in reverse.
+	Hinton promoted this viewpoint and suggested modelling each level as a Restricted Boltzmann Machine (RBM), which is ``reversible" in this sense. 
+	Vincent et al. \cite{vlbm08} suggested modelling each layer as a denoising autoencoder, a generalization of the RBM.
+	
+	These viewpoints allow a unsupervised and layerwise learning methodology instead of classical backpropagation.
+	The bottom layer is learnt in unsupervised fashion using the provided data. 
+	This gives values for the next layer of hidden variables, which are used as the data to learn the next higher layer, and so on. 
+	The final net thus learnt is also a good generative model for the distribution of the bottom layer. 
+	In practice the unsupervised phase is followed by supervised training. 
+	
+	The current paper present both an interesting family of denoising autoencoders -- a sparse neural network whose weights are randomly chosen in $[-1,1]$ --  as well as new algorithms to provably learn almost all models in this family. 	
+	
+	Though real-life neural nets are not random, consideration of random deep networks makes some sense for theory. 
+	Sparse denoising autoencoders are reminiscent of other objects such as error-correcting codes, compressed sensing, etc. which were all first analysed in the random case. 
+	
+	Here's the outline of our summary: First, generative model is introduced and a highlevel algorithm is outlined. 
+	Next, each layer in the model is shown to be a denoising autoencoder. Then, Algorithms are described and analyzed for single layer. 
+	Finally, extensions are made to analyse multilayer networks
+	
+
+
+	\section{Definitions and Results}
+	Let's introduce some notation and list the assumptions on generative model. Then main results are introduced.
+	\subsection{Generative Model}
+	\label{model}
+	Generative neural net model has $l$ hidden layers of binary vectors $h^{(l)},h^{(l-1)},\dots,h^{(1)}$ and an observed layer $y$ at bottom. The number of vertices at layer $i$ is $n$\footnotemark and set of edges between layers $h^{(i)}$ and $h^{(i+1)}$ by $E_i$. Weighted graph between layers  $h^{(i)}$ and $h^{(i+1)}$ has degree at most $n^\gamma$ and all edge weights are in $[-1,1]$. The generative model works like a neural net with threshold 0 at all nodes expect last layer. i.e, $h^{(i-1)} = \sgn(G_{i-1}h^{(i)})$ for all $i>0$ and $h^{(0)} = G_{0}h^{(1)}$ where $G_i$ is weight matrix of bipartite graph between layers $i$ and $i+1$. The top layer  $h^{(l)}$ is initialized with a 0/1 assignment where the set of nodes that are 1 is picked uniformly among all sets of size $\rho_l n$. 
+	
+	
+	The set of forward neighbours of $u$ in graph $G_i$ is denoted by $F_i(u) = \{ v:(u,v)\in E_i\}$ and set of backward neighbours of $v$ in $G_i$ is denoted by $B_i(v) = \{ u:(u,v)\in E_i\}$. $F_i^+(u) = \{ v:(u,v)\in E_i^+\}$ is set of positive forward neighbours of $u$ and $B_i^+(v)$ is set of positive backward neighbours of $v$. 
+	
+
+	\emph{Random deep net assumption}: In the ground truth, the edges between layers are chosen randomly subject to expected degree $d$ being $n^\gamma$ where $\gamma < 1/(l+1)$. In model $\mathcal{R}(l,\rho_l,\{G_i\})$, each edge carries a weight randomly chosen in $[-1,1]$. In model $\mathcal{D}(l,\rho_l,\{G_i\})$, edge weights are chosen randomly in $\{-1,1\}$. Also, expected density of last layer, $\rho_l(d/2)^l$ is assumed to be $O(1)$.
+	
+	 \footnotetext[1]{In this review, we assume all layers have equal number of vertices for brevity as is done by authors in their extended abstract. The case where these are different is also analysed by authors and it's not too different from this case.}
+
+
+	\subsection{Main Results}
+	\label{ref:results}
+	\begin{thm}
+		When degree d = $n^\gamma$ for $0\leq\gamma\leq 0.2$, density $\rho_l(d/2)^l = C$ for some large constant C, the network model  $\mathcal{D}(l,\rho_l,\{G_i\})$ can be learnt using  $O(\log n/\rho_l^2)$ samples and $O(n^2l)$ time. The network model $\mathcal{R}(l,\rho_l,\{G_i\})$ can be learnt in polynomial time and using $O(n^3l^2\log n/\eta^2)$ samples, where $\eta$ is the statistical distance between the true distribution and that generated by the learnt model.
+	\end{thm}
+
+	Authors give and analyse a new layerwise learning algorithm that exploits the fact that each layer is a denoising autoencoder. The algorithm boils down to finding correlations between nodes of a layer and putting them together this information globally to learn graph between layers. It leverages sparsity conditions of our generative model and uses well-known properties of random graphs, in particular, unique neighbors property. Algorithm \ref{algo:high} gives high level view of this algorithm
+
+	\begin{algorithm}[h]
+		\label{algo:high}
+		\textbf{Input:} Sample $y$'s generated by a deep network described in \ref{model}\\
+		\textbf{Output:} the network/encoder and decoder functions.
+		\begin{algorithmic}[1]
+			\FORALL{$i = 1$ to $l$}
+			\STATE Construct \emph{correlation graph} using samples of $h^{(i-1)}$
+			\STATE Call RecoverGraph to learn the positive edges $E_i^+$
+			\STATE Use PartialEncoder to encode all $h^{(i-1)}$ to $h^{(i)}$
+			\STATE Use LearnGraph/LearnDecoder to learn the graph/decoder between layer $i$ and $i-1$
+			\ENDFOR
+		\end{algorithmic}
+		\caption{Highlevel Algorithm}
+	\end{algorithm}
+
+	\section{Each Layer is a Denoising Auto-encoder}
+	Modern deep net research assumes that intermediate layers approximately preserve useful information and it should be able to go back and forth easily between layers. Following definition of denoising autoencoder encapsulates this.
+
+	\begin{defn}
+		An autoencoder consists of an decoding function $D(h) = s(Wh+b)$ and a encoding function $E(y) = s(W'y+b')$ where $W, W'$ are linear transformations, $b,b'$ are fixed and s is a nonlinear function that acts identically on each coordinate. The autoencoder is denoising if $E(D(h)+\eta) = h$ with high probability where $h$ is drawn from the input distribution, $\eta$ is a noise vector drawn form the noise distribution. The autoencoder is said to use weight tying if $W' = W^T$.   
+	\end{defn}
+
+	Single layer random neural net is a denoising autoencoder if the output layer has low density $\rho d \ll n$. 
+	\begin{lemma}
+		\label{cl:autoencoder}
+		If $\rho d < 0.05$, then the single-layer network above is a denoising autoencoder with high probability where the noise distribution is allowed to flip every bit independently with probability 0.01. 
+	\end{lemma}
+
+	This lemma relies on property of random graphs called \emph{strong unique neighbour property}. For any node $u \in U$ and any subset $S\subset U$, let $UF(u,S)$ be the set of unique neighbours $u$ with respect to $S$, 
+	\[ UF(u,S) = \{v \in V: v \in F(u),  v\notin F(S \setminus \{u\}) \}\]
+	then following property holds for any fixed set $S$ of size $\rho n$ with high probability over randomness of graph.
+	\begin{prop}
+		In a bipartite graph $G(U,V,E,w)$, a node $u \in U$ has $(1-\epsilon)$-unique neighbour property with respect to S if 
+		\[ \sum_{v \in UF(u,S)}|w(u,v)| \geq (1-\epsilon) \sum_{v \in F(u)}|w(u,v)|\]
+
+		The set $S$ has $(1-\epsilon)$-strong unique neighbour property if for every $u \in U$, $u$ has $(1-\epsilon)$-unique neighbour property with respect to S.
+	\end{prop}
+	If $\rho d \ll n$, for any fixed set of size S of size $\rho n$, this property holds with high probability over the randomness of the graph.
+
+	\emph{Sketch of proof of lemma \ref{cl:autoencoder}} : For a given network, definition of decoder is implicit: $y = \sgn(Wh)$. Let the encoder be $E(y) = \sgn(W^Ty+0.2d\bar{1})$. i.e, neural net run in reverse with threshold $0.2d$. Let $S$ be support of $h$. This works because 
+	\vspace{-2pt}
+	\begin{enumerate}[(i)] \itemsep=-2pt 
+		\item At least 0.9 fraction of the neighbours of node $u$ in $S$ are unique and about half of these are connected by a positive edges. Total weight for such edges is at least about $0.45d/2 = 0.225d$.
+
+		\item Each $v$ not in $S$ has at most $0.1d$ that are also neighbours of $S$. So, total weight of  edges connected to these neighbours cannot be more than $0.1d$.
+
+		\item There is enough margin to allow for small noise. $\square$
+	\end{enumerate}
+
+	%\section{Highlevel algorithm and learning single layer network}
+	%As mentioned before, authors use layerwise learning algorithm. They give highlevel algorithm for this and describe and analyze each part of the algorithm for single layer network. Later they extend this analysis to multilayer networks.
+	%
+
+	\section{Learning Single Layer Network}
+	Algorithm \ref{algo:high} outlined in Section \ref{ref:results} learns the network layer by layer starting from the bottom. Thus the key step is learning of a single layer network which is described in this section. The hidden and observed layer each have $n$ nodes and generative model assumes that hidden layer is a random 0/1 assignment with $\rho n$ nonzeros. 
+
+	\subsection{Step 1 -- Construct correlation graph}
+	Say two nodes are \emph{related} if they have a common neighbour in hidden layer to which they are attached by a positive edge. Aim of this step is to find all related nodes. This step is a new twist on Hebbian rule (``things that fire together wire together"). In the next step, this information about related nodes is used to recover all the positive edges.
+
+	\begin{algorithm}
+		\caption{Pairwise Graph}
+		\textbf{Input:} N = $O(\log n/\rho)$ samples of $y = \sgn(Gh)$, where $h$ is unknown and chosen from uniform $\rho n$ sparse distribution\\
+		\textbf{Output:} Graph $\hat{G}$ on vertices $V$, $u,v$ are connected if u,v are related
+		
+		\begin{algorithmic}[1]
+			\FOR{each $u,v$ in output layer}
+			\IF{there are atleast $2\rho N/3$ samples of $y$ satisying both $u$ and $v$ are fired}
+			\STATE Connect $u$ and $v$ in $\hat{G}$
+			\ENDIF
+			\ENDFOR
+		\end{algorithmic}\label{algo:paircorr}
+	\end{algorithm}
+
+	\begin{lemma}
+		\label{ref:corr}
+		If $\rho \ll 1/d^2,$ in a random sample of the output layer, related pairs $u$,$v$ are both 1 with probability at least $0.9\rho$, while unrelated pairs are both 1 with probability at most $(\rho d)^2$.
+	\end{lemma}
+	\emph{Sketch of the proof} : Consider that Let $u$ and $v$ are related. ie there is a vertex $z$ such that $uz$ and $vz$ have positive weights. Let, $U = B(u) \cup B(v) \setminus \{z\}$. When $\supp(h)\cap U = \emptyset$ and $h_z = 1$, $u$ and $v$ both are surely fired. So, 
+	\[
+	P_h[u = 1, v = 1] \geq P[h_z = 1, \supp(h)\cap U = \emptyset] = P[ \supp(h)\cap U = \emptyset]P[h_z = 1| \supp(h)\cap U = \emptyset ]
+	\]
+	Due to simple concentration bounds, size of $U$ cannot be too large than, say $3d$. So, first term, $P[ \supp(h)\cap U = \emptyset] \geq 1-3\rho d \geq 0.9 $ . When $\supp(h)\cap U = \emptyset$, $h$ is still $\rho m$ sparse. Hence $P[h_z = 1| \supp(h)\cap U = \emptyset ] \geq \rho$. This gives us $P_h[u = 1, v = 1] \geq 0.9\rho$.
+
+	Now consider that $u$ and $v$ are not related but both $u$ and $v$ fired. There should be nodes $y$ and $z$ that are $1$ and are connected via positive edges to $u$ and $v$ respectively. Probability of this can be bound by  $(\rho d)^2$ using union bound. Note that  $(\rho d)^2 \ll \rho$. $\square$\vspace{10pt}
+
+	Now, we just need to estimate $P[u = 1, v = 1]$ up to a accuracy of, say $\rho/4$ which can be done using $O(\log n/\rho^2)$ samples by Chernoff bounds. So, algorithm \ref{algo:paircorr} recovers all related nodes.
+
+	The assumption $\rho \ll 1/d^2,$ might seem very strong. It can be made weaker by using higher order correlations. If 3-wise correlations are used, following algorithm works if $\rho \ll 1/d^{1.5}$. The proof that this algorithm works is very similar to that of pairwise case.
+
+	\begin{algorithm}
+		\caption{3-Wise Graph}
+		\label{algo:3-corr}
+		\textbf{Input:} N = $O(\log n/\rho)$ samples of $y = \sgn(Gh)$, where $h$ is unknown and chosen from uniform $\rho n$ sparse distribution\\
+		\textbf{Output:} Hypergraph $\hat{G}$ on vertices $V$, $u,v,s$ is an edge if and only if they share a positive neighbour in G
+		\begin{algorithmic}[1]
+			\FOR{each $u,v,s$ in output layer}
+			\IF{there are atleast $2\rho N/3$ samples of $y$ satisying both $u,v$ and $s$ are fired}
+			\STATE Connect $u,v$ and $s$ in $\hat{G}$
+			\ENDIF
+			\ENDFOR
+		\end{algorithmic}
+	\end{algorithm}
+
+
+	\subsection{Step 2 -- Use \textmd{RecoverGraph} procedure to find all the positive edges}
+	The problem is to recover graph given nodes at a distance at most 2 in the graph. This problem is a sub-case of \textsc{Graph Square Root} problem which is NP-hard. However, this is solvable in case of random graphs or random-like graphs.
+
+	\begin{defn}
+		\label{def:graphreco}
+		\textsc{Graph Recovery problem:} There is a unknown random bipartite graph $G_1(U,V,E_1)$ between $|U| = |V| = n$ vertices. Every edge is chosen with probability d/n.\\
+		\textnormal{Given :} Graph $\hat{G}(V,E)$ where $(v_1,v_2) \in E$ iff $v_1$ and $v_2$ share a common parent in $G_1$.\\
+		\textnormal{Goal :} Find the bipartite graph $G_1$.
+	\end{defn}
+	Let $\Gamma(v)$ denote neighbours of $v$ in $\hat{G}$. Proof of the Algorithm requires following properties :
+	\begin{enumerate}
+
+		\item For any $v_1,v_2 \in V$, $|(\Gamma(v_1)\cap \Gamma(v_2)) \setminus F(B(v_1)\cap B(v_2))| < d/20$. This property says that all except possibly $d/20$ neighbours of $v_1$ and $v_2$ in $G_1$ are caused by a common cause of $v_1$ and $v_2$
+
+		\item For any $u_1,u_2 \in U$, $|F(u_1)\cup F(u_2)| > 1.5d$. Since $F(u)$'s are chosen randomly, they should be fairly disjoint.
+
+		\item  For any $u \in U, v \in V $ and $v\notin F(u)$, $|\Gamma(v)\cap F(u)|<d/20$. i.e, neighbour $v$ unrelated to $u$ cannot have too many correlation with neighbours of $u$
+
+		\item For any $u \in U$, at least 0.1 fraction of pairs $v_1, v_2 \in F(u)$ doesn't have a common neighbour other than $u$. This says that every cause introduces a significant number of correlations that is unique to itself.
+
+		\item For any $u \in U$, $0.8d \leq |F(u)| \leq 1.2d$.
+
+	\end{enumerate}
+	All these properties hold whp over randomness of graph if $d^3/n \ll 1$
+
+	\begin{algorithm}
+		\caption{RecoverGraph}
+		\label{algo:graphreco}
+		\textbf{Input:}  $\hat{G}$ as given in definition \ref{def:graphreco}\\
+		\textbf{Output:} Graph $G_1$ as in definition \ref{def:graphreco}
+		\begin{algorithmic}[1]
+			\REPEAT
+			\STATE Pick a random edge $(v_1,v_2) \in E$
+			\STATE Let $S = \{v: (v,v_1),(v,v_2) \in E \}$
+
+			\IF{$|S|<1.3d$}
+			\STATE $S' = \{ v \in S: |\Gamma(v)\cap S|\geq 0.8d-1\}$
+			\STATE In $G_1$, create a vertex $u$ and connect $u$ to every $v \in S'$
+			\STATE Mark all the edges $(v_1,v_2)$ for $v_1,v_2\in S'$
+			\ENDIF
+			\UNTIL{all nodes are marked} 
+		\end{algorithmic}
+	\end{algorithm}
+
+
+	\begin{lemma}
+		When graph $G_1$ satisfies properties 1-5, Algorithm \ref{algo:graphreco} successfully recovers the graph $G_1$ in expected time $O(n^2)$
+	\end{lemma}
+	\emph{Proof}: If $(v_1,v_2)$ has more than one cause, say $u_1$ and $u_2$. Then S contains union of $F(u_1)$ and $F(u_2)$.By property 2, $|S|$ is at least $1.5d$ and condition in if statement is not satisfied.
+
+	Now suppose that  $(v_1,v_2)$ has a unique cause $u$, then we show that $S' = F(u)$. From property 1, $S = F(u)\cup T$ where $|T|<d/20$. So, $|S|<11d/20$ and condition in if statement is satisfied. 
+
+	For any vertex $v$ in $F(u)$, $\Gamma(v)$ contains $F(u)\setminus\{v\}$. So, $|\Gamma(v) \cap S| \geq |\Gamma(v) \cap F(u)| \geq |F(u)\setminus\{v\}|\geq 0.8d-1$. For any vertex $v$ not in $F(u)$, $|\Gamma(v) \cap S| \leq |\Gamma(v) \cap F(u)| + |T| \leq d/10$ using property 3. So, $S' = F(u)$. 
+
+	Algorithm will find all $u \in U$ because by property 4, there are enough number of correlations that are only caused by $u$. When such correlation is sampled in $\hat{G}$, $u$ is recovered. So, all nodes in $U$ are recovered in at most $10n$ iterations in expectation and each iteration takes $O(n)$ time. So, Algorithm runs in $O(n^2)$ time. $\square$
+	\vspace{10pt}
+
+	If 3-wise correlation graph was constructed in previous step instead of pairwise graph, Algorithm \ref{algo:graphreco3wise} can be used to recover graph. This Algorithm gives better bounds. Proof of the algorithm runs similar to the previous case.
+
+	\begin{algorithm}[H]
+		\caption{RecoverGraph3Wise}
+		\label{algo:graphreco3wise}
+		\textbf{Input:}  Hypergraph $\hat{G}$ in which edges indicate correlation\\
+		\textbf{Output:} Underlying graph $G_1$
+		\begin{algorithmic}[1]
+			\REPEAT
+			\STATE Pick a random edge $(v_1,v_2,v_3) \in E$
+			\STATE Let $S = \{v: (v,v_1,v_2),(v,v_1,v_3), (v,v_2,v_3) \in E \}$
+
+			\IF{$|S|<1.3d$}
+			\STATE $S' = \{ v \in S: |\Gamma(v)\cap S|\geq {0.8d-1\choose 2}\}$
+			\STATE In $G_1$, create a vertex $u$ and connect $u$ to every $v \in S'$
+			\STATE Mark all the edges $(v_1,v_2,v_3)$ for $v_1,v_2,v_3\in S'$
+			\ENDIF
+			\UNTIL{all nodes are marked} 
+		\end{algorithmic}
+	\end{algorithm}
+
+
+	\subsection{Step 3 -- Use the recovered positive edges to encode all samples} In step 2, we will have found edges which have positive edges. Following Algorithm allows us to recover assignment of hidden layer given assignment of output layer and positive edges.
+
+	\begin{algorithm}
+		\caption{PartialEncoder}
+		\label{algo:partialenco}
+		\textbf{Input:} Positive edges $E^+$, sample $y = \sgn(Gh)$, threshold $\theta$\\
+		\textbf{Output:} the hidden variable $h$
+		\begin{algorithmic}
+			\RETURN $h = \sgn((E^+)^Ty-\theta\bar{1})$
+		\end{algorithmic}
+	\end{algorithm}
+
+	Note that $E^+$ denotes 0/1 bipartite matrix not weight matrix. 
+
+	\begin{lemma}
+		If the support of vector $h$ has the $11/12$-strong unique neighbour property in $G$, then Algorithm \ref{algo:partialenco} return $h$ given input $E^+$, $y = \sgn(Gh)$ and threshold $\theta = 0.3d$
+	\end{lemma}
+	\emph{Proof}: If $u \in S = \supp(h)$, at most $d/6$ neighbours can be shared with other vertices in S from strong unique neighbour property. Thus $u$ has at least $0.3d$ neighbours which are 1. 
+
+	If $u \notin S$, it can have intersection with at most $d'/4$ with $F(s)$, thus there cannot be more than $0.3d'$ of its neighbours that are 1. $\square$
+
+	\smallskip
+	Steps $1,2,3$ work regardless of weights being discrete or continuous. This is because only the signs of weights are used in the proofs and algorithms. 
+
+	\subsection{Step 4 -- Learn Graph}
+	After step 3, the problem of unsupervised learning is turned into a supervised learning problem! So, weights of edges can be learnt to desirable accuracy if weights are real. if weights are in $\{-1,1\}$, there is a simple algorithm to find all $-1$ edges.
+
+	\subsubsection*{Learning Discrete Weights}
+	Now that pairs $(h,y)$ have been given, the idea is to use all of them to determine all non-edges of the graph. Since all $+1$ edges are known, all $-1$ edges can be found. 
+
+	Suppose in some sample, $y_v = 1$ for some $v$ and exactly one neighbour of $v$ in positive edge graph is in support of $h$. Let's call this neighbour $u$. There cannot be any $-1$ edge between $v$ and $\supp(h)$ as this would cancel out contribution of $u$. This motivates the following algorithm.
+
+	\begin{algorithm}[H]
+		\caption{LearningGraph}
+		\label{algo:LearningGraph}
+		\textbf{Input:} Positive edges $E^+$, samples of  $(h,y)$, where h is from uniform $\rho n$-sparse distribution and $y = \sgn(Gh)$\\
+		\textbf{Output:} $E^-$
+		\begin{algorithmic}[1]
+			\STATE $R \gets (U\times V)\setminus E^+$
+			\FOR{each of the samples $(h,y)$ and each $v$}
+			\STATE Let S be the support of $h$
+			\IF{$y_v =1 $ and $S\cap B^+(v) = {u}$ for some $u$}
+			\FOR{$s\in S$}
+			\STATE remove $(s,v)$ from R
+			\ENDFOR
+			\ENDIF
+			\ENDFOR 
+		\end{algorithmic}
+	\end{algorithm}
+
+	\begin{lemma}\label{lemma:learngraph}
+		Suppose we have $ N = O(\log n/(\rho d^2))$ samples of pairs $(h,y)$ with uniform $\rho m$-sparse $h$ and $y = \sgn(Gh)$. Then with high probability over choice of the samples, Algorithm \ref{algo:partialenco} outputs the correct set $E^-$.
+	\end{lemma}
+	\emph{Sketch of the proof}: All we really need to show is that probability that a non-edge is not identified is very low. It is not too tough to show that probability that a non edge $(z,u)$ is identified by one sample (h,y) is at least $\rho d^2/3$. Thus the probability that it is not identified after $O(\log n/(\rho d^2))$ is $<1/n^c$. By union bound, all non-edges are found whp.
+	$\square$
+	
+	Let's summarise the results in this section into following theorem. 3-wise correlations are used to get bounds in this theorem.
+	
+	\begin{thm}
+	Suppose our generative neural net model with weights $\{-1, 1\}$ has a single layer and the assignment of the hidden layer is a random $\rho n$-sparse vector, with $\rho \ll 1/d^{3/2}$.Then there is an algorithm that runs in $O(n(d^3 + n))$ time and uses $O(log n/\rho^2)$ samples to recover the ground truth with high probability over the randomness of the graph and the samples.
+	\end{thm}
+
+
+	\subsubsection*{Learning Continuous Weights}
+	When the weights on the edges are continuous in $[-1,1]$, learning the decoder becomes harder. In fact, an example can be constructed in which we cannot hope to learn the weights exactly without exponential number of samples. Thus improper learning is necessary when weights are real. An algorithm exists which achieves a slightly weaker guarantee: the decoder learned by this algorithm is correct with probability $1-\eta$.
+
+	\begin{algorithm}[H]
+		\caption{LearningDecoder}
+		\label{algo:learndec}
+		\textbf{Input:} $N = O(n^3l^2\log n/\eta^2)$ samples $(h^1,y^1),(h^2,y^2),\dots, (h^N,y^N)$ where $y = \sgn(Gh)$\\
+		\textbf{Output:} A graph $G'$ such that $P_{h\sim\mathcal{D}_t}[\sgn(G'h) \not= \sgn(Gh)] \leq \epsilon$
+		\begin{algorithmic}
+			\STATE Solve the linear program
+			\[
+			\forall j, G'h^j \leq 0 \text{ if $y^j$ = 1 and } G'h^j >0 \text{ if $y^j$ = 0 }
+			\]
+			\RETURN a feasible solution $G'$, the docoder is $y = D(h) = \sgn(G'h)$
+		\end{algorithmic}
+	\end{algorithm}
+
+	\begin{lemma}
+		Given $N = O(n^3l^2\log n/\eta^2)$ samples of $(h,y)$ where $h$ is chosen from distribution $\mathcal{D}_t$ and $y = \sgn(Gh)$, with high probability over the choice of samples, Algorithm \ref{algo:learndec} outputs a matrix $G'$ that satisfies $y^i = \sgn(G'h^i)$ for all samples $(y^i,h^i)$. Furthermore,
+		\[P_{h\sim\mathcal{D}_t}[\sgn(G'h) \not= \sgn(Gh)] < \eta/l\]
+	\end{lemma}
+	\emph{Proof}: LP in Algorithm \ref{algo:learndec} is feasible because G is a feasible solution. Every feasible solution is consistent with all the samples.
+
+	Note that hypothesis class for coordinate $y_v$ is simply all the halfplanes $\sgn((Gh)_v)$. By VC-dimension theory, since the VC-dimension of a half-plane is n+1, any hypothesis that is consistent with all $N$ samples has generalization error $O(\sqrt{n\log N/N})$. More precisely,
+	\[
+	P_{h\sim\mathcal{D}_t}[\sgn(G'^vh) \not= \sgn(G^vh)] \leq \sqrt{2n\log N/N}+ O(\log n/2N) \leq \eta/nl
+	\]
+	for each output node $v$. By union bound on all nodes, $P_{h\sim\mathcal{D}_t}[\sgn(G'h) \not= \sgn(Gh)] < \eta/l$
+	
+	\section{Correlations in a Multilayer network}
+	We now consider multilayer networks. To extend the analysis of the previous section to multilayer networks, all that really needed is to prove that Algorithms \ref{algo:paircorr} and \ref{algo:LearningGraph} works even when distribution is not uniformly $\rho n$ sparse but is of distribution that is generated at an intermediate layer of neural network. Once this is confirmed, rest of the steps work as before without any need of modifications as only randomness of $G_t$ is assumed in these steps.
+	
+	\begin{lemma}
+	For any $u,v$ in the layer of $h^{(1)}$, if they have a common positive neighbour in the layer of $h^{(2)}$
+	\[P[u = 1, v = 1] \geq \rho_{2}/2\] Otherwise,
+	\[P[u = 1, v = 1] \leq \rho_{2}/4\] 
+	Here, $\rho_i = \rho_{i+1}d_i/2$ is the expected density of layer $i$.
+	\end{lemma}
+	\emph{Sketch of the proof}: Firstly, for any $i$ $P[h^{(i)}(u) = 1]$ can be shown to be between $3\rho_i/4$ and $5\rho_i/4$ . 
+	
+	Suppose that  $u,v$ in the layer of $h^{(1)}$ has a common neighbour $z$ in layer $h^{(2)}$ with positive edges to the both and none of the neighbours with negative edge are 1 in the layer $h^{(2)}$. This condition ensures $u = 1, v = 1$. The probability of this can be shown to occur with the probability more than $\rho_2/2$ using the above bound and the fact that $B(\{u,v\})$ cannot be too large than $2d$.
+	
+	Now, suppose that $u$ and $v$ are not related, It turns out that $P[u = 1, v = 1]$ can be bound by $\rho_{2}/5$ by using union bounds. $\square$
+	
+	This lemma is analogous to lemma \ref{ref:corr} and it shows that Algorithm \ref{algo:paircorr} works.
+	
+	\begin{lemma}
+	Suppose $\rho_y d \ll 1$ and $h$ is chosen from distribution $\mathcal{D}_2$, using $O(\log n/(\rho^2 d))$ samples, with high probability over choice of the samples, Algorithm \ref{algo:LearningGraph} returns $E^-$
+	\end{lemma}
+	Proof of this is very similar to that of lemma \ref{lemma:learngraph}.
+	
+	These two lemmas allows us to learn layer by layer with little modification in steps of learning single layer network.
+	
+	\section{Learning the Lowermost (real-valued) Layer}
+	Note that in our model, the lowest (observed) layer is real-valued and doesn't have threshold gates. So, our earlier learning algorithms cannot be applied as is. However, same paradigm - identifying correlations and using \textsc{GraphRecover} - can be used.
+	
+	First step is to show that for a random weighted graph G, the linear decoder $D(h) = Wh$ and the encoder $E(y) = sgn(W^T y + b)$ form a denoising autoencoder with real-valued outputs. 
+	\begin{lemma}
+	If G is a random weighted graph, the encoder $E(y)=\sgn(W^Ty - 0.4 d \bar{1})$ and linear decoder $D(h)= Wh$ form a denoising autoencoder,for noise vectors which have independent components, each having variance at most $O(d/ \log^2 n)$.	\end{lemma}
+
+	The next step is to show a bound on correlations as before.	
+	\begin{lemma}
+		When $\rho_1d = O(1), d = \Omega(\log^2 n)$, with high probability over the choice of the weights and the choice of the graph, for any three nodes $u, v, s$ the assignment $y$ to the bottom layer satisfies:
+		\begin{enumerate}
+		\item If u,v and s have no common neighbour, then $|E_h[y_uy_vy_s]| \leq \rho_1/3$
+		\item If u,v and s have a unique common neighbour, then $|E_h[y_uy_vy_s]| \geq 2\rho_1/3$
+		\end{enumerate}
+	\end{lemma}
+	Proof of this lemma is similar to that of lemma \ref{ref:corr}.
+	\section{Two layers are more expressive than one}
+	Authors finally show that a two layer network cannot be represented by a one layer network.
+	\begin{lemma} 
+	For almost all choices of $(G_1 , G_2 )$ the following is true. For every one layer network with matrix $A$ and vector $b$, if $h^{(3)}$ is chosen to be a random $\rho_3n$-sparse vector with $\rho_3d_2d_1 \ll 1$, the probability (over the choice of $h^{(3)}$ ) is at least $\Omega(\rho_3^2)$ that $\sgn(W_1 \sgn(W_2h^{(3)})) \not= \sgn(Ah^{(3)} + b)$.
+	\end{lemma}
+	The idea is that the cancellations possible in the two-layer network simply cannot all be accommodated in a single-layer network even using arbitrary weights.
+	
+	
+	\section{Conclusions}
+	Authors give provably fast algorithms to learn random and sparse deep neural nets. They leverage properties of random graphs and sparsity to prove these. 
+	
+	Many aspects of deep nets are mysterious to theory: reversibility, why use denoising autoencoders, why this highly non-convex problem is solvable, etc. Authors gives a first-cut explanation.
+	Worst-case nets seem hard, and rigorous analysis of interesting subcases can stimulate further development: see e.g., the role played in Bayes nets by rigorous analysis of message-passing on trees and graphs of low tree-width. 
+	
+	Authors also note that random neural nets do seem useful in so-called reservoir computing.	
+\begin{thebibliography}{4}
+
+\bibitem{main}  Sanjeev Arora, Aditya Bhaskara, Rong Ge, and Tengyu Ma. Provable bounds for learning some deep representations. CoRR, abs/1310.6343, 2013.
+
+\bibitem{hkz12}Daniel Hsu, Sham M. Kakade, and Tong Zhang. A spectral algorithm for learning hidden Markov models. Journal of Computer and System Sciences, 78(5):1460 – 1480, 2012.
+
+\bibitem{mv10}Ankur Moitra and Gregory Valiant. Settling the polynomial learnability of mixtures of gaussians. In the 51st Annual Symposium on the Foundations of Computer Science (FOCS), 2010.
+
+\bibitem{hk13}
+Daniel Hsu and Sham M. Kakade. Learning mixtures of spherical gaus- sians: moment methods and spectral decompositions. In Proceedings of the 4th conference on Innovations in Theoretical Computer Science, pages 11–20, 2013.
+
+\bibitem{agm12}{Sanjeev Arora, Rong Ge, and Ankur Moitra. Learning topic models – going beyond svd. In IEEE 53rd Annual Symposium on Foundations of Computer Science, FOCS 2012, New Brunswick NJ, USA, October 20-23, pages 1–10, 2012.}
+
+\bibitem{afh12}{Anima Anandkumar, Dean P. Foster, Daniel Hsu, Sham M. Kakade, and Yi-Kai Liu. A spectral algorithm for latent Dirichlet allocation. In Advances in Neural Information Processing Systems 25, 2012.}
+
+\bibitem{jks02}{Jeffrey C Jackson, Adam R Klivans, and Rocco A Servedio. Learnability beyond $ac^0$. In Proceedings of the thiry-fourth annual ACM symposium on Theory of computing, pages 776 – 784. ACM, 2002.}
+
+\bibitem{ks09}{Adam R Klivans and Alexander A Sherstov. Cryptographic hardness for learning intersections of halfspaces. Journal of Computer and System Sciences, 75(1):2 –12, 2009.}
+
+\bibitem{vlbm08}{Pascal Vincent, Hugo Larochelle, Yoshua Bengio, and Pierre-Antoine Manzagol. Extracting and composing robust features with denoising autoencoders. In ICML, pages 1096–1103, 2008.}
+\bibitem{ben09}{Yoshua Bengio. Learning deep architectures for AI. Foundations and Trends in Machine Learning, 2(1):1–127, 2009. Also published as a book. Now Publishers, 2009.}
+\end{thebibliography}
+
+
+\end{document}

@@ -1,0 +1,173 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=1in,
+ right=1in,
+ top=1in,
+ bottom=1in,
+ }
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{tgpagella}
+\usepackage[T1]{fontenc}
+\usepackage{todonotes}
+%% Define Theorem Stuff
+% Theorem Styles
+\newtheoremstyle{dotless}{}{}{\itshape}{}{\bfseries}{}{ }{}
+\theoremstyle{dotless}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+% Definition Styles
+\newtheoremstyle{dotless}{}{}{}{}{\bfseries}{}{ }{}
+\theoremstyle{dotless}
+\newtheorem{defn}{Definition}[section]
+\newtheorem{ex}{Example}[section]
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+%%
+
+
+\begin{document}
+\title{Error Correcting Codes Notes}
+\author{Sasank}
+\date{\today}
+\maketitle
+
+
+\section{Properties of Linear Block Codes}
+
+\begin{itemize}
+\item The minimum distance of a linear block code is equal to theminimum weight of its nonzero codewords
+
+\item Let C be a linear block code with parity check matrix H. There exists a codeword of weight w in C iff there exist w columns in H which sum to the zero vector.
+ 
+\item \emph{Singleton Bound:} Let C be an $(n, k )$ binary block code with minimum distance$d_{min}$.$$d_{min} \leq n - k + 1$$
+
+Prove by puncturing first $d_min-1$ locations in each codeword and count number of codewords.
+
+\item Let $A_i$ be the number of codewords of weight $i$ in C. Probability of undetected error over a BSC is given by $$P_{ue} = \sum_{i=1}^n A_ip^i(1-p)^{n-i}$$
+
+\item \emph{Standard Array:} Rows are cosets of the code and first row in each row is called a coset leader. Any error pattern equal to a coset leader is correctable. So, every $(n,k)$ binary block code can correct $2^{n-k}$ error patterns.
+
+\item \emph{Syndrome Decoding:} Each coset has a unique syndrome $y.H^T$. So, compute syndrome, find coset leader corresponding to that syndrome and add it to the received vector, $y$. 
+
+\item Let $\alpha_i$ be the number of coset leaders of weight $i$ in C. Probability of decoding error over a BSC is given by $$P_e = 1- \sum_{i=0}^n\alpha_i p^i(1-p)^{n-i}$$
+
+\item \emph{Hamming Bound}: Let C be an $(n, k )$ binary linear block code with minimum distance $d_{min} \geq 2t + 1$.
+$$2^{n-k}\geq 1 + {n\choose 1}+{n\choose 2}+\dots+{n\choose t} $$
+Prove by counting number of cosets. All patterns with weight less than or equal to t are coset leaders.
+
+\item \emph{MacWilliams Identity:} Let $A_i$ be weight distribution of C and $B_i$ be that of $C^\perp$.
+$$A(z) = 2^{-(n-k)}(1+z)^n B\left( \frac{1-z}{1+z}\right)$$
+Can be useful in computing $P_{ue}$
+
+\end{itemize}
+
+\section{Examples of Linear Block Codes}
+\subsection{Hamming Code}
+For any integer $m \geq 3$, the code with parity check matrix consisting of all nonzero columns of length $m$ is a Hamming code. Some Properties:
+\begin{itemize}
+\item $n = 2^m - 1$
+\item $k = 2^m - m -1$
+\item $d_{min} = 3$
+\end{itemize}
+
+\subsection{Reed Muller Code}
+Let $P(r,m)$ be the set of all boolean polynomials of $m$ variables having degree $r$ or less. Reed Muller code $RM(r,m)$ is given be the vectors \[\{v(f) | f \in P(r,m) \}\]
+Where $v(f)$ is length $2^m$ vector containing values of $f$ evaluated at each of vector in $F_2^m$.
+\begin{itemize}
+\item Linear Code
+\item n = $2^m$
+\item k = $1 + {m\choose 1}+{m\choose 2}+\dots+{m\choose r}$
+\item  \todo[inline]{read all this: decoding and min distance and all}
+\end{itemize}
+
+
+\section{Cyclic Code}
+An $(n,k)$ linear block code C is a cyclic code if every cyclic shift of a codeword in C is also a codeword. Let $V(x)$ denote polynomial representation of V.
+\subsection{Properties}
+\begin{itemize}
+\item Let $v^{(i)}(x)$ denote $i$th cyclic shift of $v(x)$. Then, $v^{(i)}(x) = x^iv(x)\mod{x^n+1}$
+\item The nonzero code polynomial of minimum degree in a linear block code is unique. For $(n,k)$ cyclic code, constant term of such polynomial $g(x)$ is 1. We call $g(x)$ generator of the code
+\item A binary polynomial of degree $n-1$ or less is a code polynomial if and only if it is a multiple of $g(x)$.
+\item $\deg{g(x)} = n-k$
+\item $g(x)$ generates a cyclic code iff $g(x)$ is a factor of $x^n + 1$.
+\item \emph{Systematic encoding:} Divide $x^{n-k}u(x)$ by $g(x)$ to obtain reminder $b(x)$. Code polynomial is given by $b(x) + x^{n-k}u(x)$
+\end{itemize}
+
+-- Some Circuits here --
+
+\subsection{Error Detection}
+Syndrome polynomial $s(x) = r(x)\mod{g(x)}$
+\begin{itemize}
+\item If $x + 1$ is a factor of $g(x)$, all odd weight error patterns are detected
+\item A polynomial over $F_2$ is said to be \textbf{irreducible} over $F_2$ if it has no factors other than 1 and itself. A degree $m$ irreducible polynomial is \textbf{primitive} if the smallest value of N for which it divides $x^n + 1$ is $2^m -1$
+\end{itemize}
+
+\section{Finite Groups}
+\begin{defn} 
+A set $G$ with binary operation $*$ defined on it is called a group if
+\begin{enumerate}
+\item $*$ is associative
+\item There exists a identity element $e$, $a*e = e*a = a$
+\item For every element $a$, there exists a inverse $b$, $a*b = b*a = e$
+\end{enumerate}
+Order of finite group is its cardinality.
+
+\begin{itemize}
+\item \textbf{Cyclic group} $G = (g)$, for some element $g \in G$. It is called generator of $G$.
+\item \textbf{Group isomorphism} is a bijection between two groups which `preserves' binary operation
+\item Every cyclic group of order $n$ is isomorphic to $\mathbb{Z}_n$
+\item A nonempty subset of $S$ of a group $G$ is called a \textbf{subgroup} of $G$ if for all $\alpha, \beta \in S$
+		\begin{itemize}
+		\item $\alpha + \beta \in S$
+		\item $-\alpha \in S$
+		\end{itemize}
+
+\item If $S$ is a subgroup of a finite group $G$, then $|S|$ divides $|G|$. For any $g \in G$, the set $S+g$ = $\{s + g|s \in S\}$ is called a \textbf{coset} of S.
+\item Every subgroup of a cyclic group is cyclic. There is a \emph{unique} subgroup for each divisor of order of the cyclic group.
+\item A cyclic group of order $n$ has $\phi(n)$ generators where $\phi(n)$ is Euler's function. Can use this to prove
+$$n = \sum_{d|n}\phi(d)$$
+\end{itemize}
+\end{defn}
+
+
+\section{Finite Fields}
+\begin{defn}
+A set $F$ together with two binary operations $+$ and $*$ is a field if
+\begin{enumerate}
+\item $F$ is an abelian group under $+$ whose identity is called $0$\item $F^* = F \setminus \{0\} $ is an abelian group under $*$ whose identity is called $1$\item For any $a,b,c \in F$, $a * (b + c) = a * b + a * c$
+\end{enumerate}
+A finite field is a field with a finite cardinality.
+\end{defn}
+
+\begin{itemize}
+\item \textbf{Field isomorphism} is a bijection between two fields which `preserves' binary operations $+$ and $*$
+\item Every field $F$ with a prime cardinality $p$ is isomorphic to $\mathbb{F}_p$. (Prove this by observing that $F = (1)$)
+\item A nonempty subset of $S$ of a field $F$ is called a \textbf{subfield} of $F$ if for all $\alpha, \beta \in S$
+		\begin{itemize}
+		\item $\alpha + \beta \in S$
+		\item $-\alpha \in S$
+		\item $\alpha * \beta \in S\setminus\{0\}$
+		\item $-\alpha^-1 \in S\setminus\{0\}$
+		\end{itemize}
+
+\item Let $F$ be a field with multiplicative identity $1$. The \textbf{characteristic} of $F$ is the smallest integer $p$ such that $1+1+1+\dots+1 \text{ (p times)} = 0$. The characteristic of a finite field is prime. (If not, its divisors will be characteristic contradicting minimality)
+\item 
+\end{itemize}
+
+
+
+
+
+
+
+
+
+\end{document}

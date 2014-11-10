@@ -1,0 +1,32 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=1.25in,
+ right=1.25in,
+ top=1.25in,
+ bottom=1.25in,
+ }
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{SOP}
+\author{Sasank}
+\date{\today}
+\maketitle
+
+My first research experience is after my sophomore year when I had enough fundamentals to have an interest in research. 
+%\todo{too specific? Too big may be}
+I have worked, in team of three on a transform called Fractional Fourier Transform (FrFT).
+Our problem was to give a proof/algorithm to estimate parameters of a given chirp signal. 
+We have spent considerable time understanding the transform and how to discretize this transform for fast implementation. 
+It turns out that discretizing this transform is not so straightforward as discretizing standard Fourier transform to DFT. There are many discretizations available and not all elegant properties of continuous FrFT are satisfied by each. 
+We chose a discretisation which preserves properties relevant to our problem and still $O(n\log n)$ to compute. We then gave an algorithm in discrete domain using this discretisation and proved its correctness.
+
+
+I have worked on optical communications for my intern. 
+
+
+\end{document}

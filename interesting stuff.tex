@@ -1,0 +1,40 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=1.25in,
+ right=1.25in,
+ top=1.25in,
+ bottom=1.25in,
+ }
+\usepackage{graphicx}
+\usepackage{tgpagella}
+\usepackage[T1]{fontenc}
+
+\begin{document}
+
+\title{Some interesting observations}
+\author{Sasank}
+\date{\today}
+\maketitle
+
+\section{Stochastic Gradient Schemes}
+Apparently these are everywhere. Perceptron algorithm is a stochastic gradient descent for regression.
+
+\subsection{Perceptron Algorithm}
+\begin{description}
+\item[Given]: IID pairs training pairs $(X_n,C)$ where $X_n$ refers to inputs and $C$ refers to classification of this input
+\item[Objective]: Find $W$ which minimises $f(w) = E\left [\| \varphi\left (W^TX\right)-C \|^2 \right ]$ where $\varphi$ is activation function.
+
+\item[Algorithm]: We can remove expectation and replace it by value of function at a sample !
+$$W_{n+1} = W_n -a_n. \nabla^W \left[ \|\varphi\left (W^TX_n\right)-C_n \|^2 \right ]$$
+$$W_{n+1} = W_n -2a_n\left [ \varphi\left(W_n^TX_n\right )-C \right ] .\varphi'\left(W_n^TX_n\right ).X_n$$
+$$W_{n+1} = W_n -2a_n.error.X_n$$
+Here,$\varphi' \approx 1$ by assumption of activation function. 
+\end{description}
+Cool,huh?
+\end{document}
+
+
+

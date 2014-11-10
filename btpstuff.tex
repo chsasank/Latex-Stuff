@@ -1,0 +1,32 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=1.25in,
+ right=1.25in,
+ top=1.25in,
+ bottom=1.25in,
+ }
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{BTP stuff}
+\author{Sasank}
+\date{\today}
+\maketitle
+
+\section{Simplified Problem}
+This is the (very) simplified problem I have:
+
+Consider the following system:
+\[
+E_{k+1} = (E_k - T_k) + Y_k
+\]
+where $T_k \leq E_k$ and $Y_k$ is iid. Then, find stationary $T_k$ which maximises 
+\[
+E_\pi[g(T)]
+\]
+where $\pi$ is stationary distribution of $T_k$
+\end{document}

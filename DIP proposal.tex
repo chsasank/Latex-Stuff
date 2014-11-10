@@ -1,0 +1,42 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=1.25in,
+ right=1.25in,
+ top=1.25in,
+ bottom=1.25in,
+ }
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{cite} 
+\begin{document}
+
+\title{Traffic Sign Classification using Random Forests and LDA on Histogram of Oriented Gradients descriptors}
+\author{Sasank Chilamkurthy - 110070051 \\
+Tharun Kumar Reddy - 110070048\\
+Rajeev Puppala - 110070055}
+\date{\today}
+\maketitle
+
+We evaluate the performance of Random Forests and Linear Discriminant analysis (LDA) for traffic sign recognition using Histogram of Oriented Gradients (HOG) [3] descriptors. We use German Traffic Sign Recognition Benchmark (GTSRB) dataset available \texttt{\href{http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset}{here}}. Description of data set and overview of results of various learning algorithms used for this benchmark is presented in [1]. Random Forests was shown to one of the best classifiers just behind convolutional neural networks which are very computationally intensive. More details on this implementation is presented in [2].
+
+Different HOG descriptors of test images are supplied along with dataset. We implement LDA on these descriptors as a baseline for performance. We chose Random Forests over others as Random Forests are easy to implement, understand and perform comparably to other state of the art machine learning algorithms.
+
+If time permits, we will do similar classification for faces or human poses.
+
+\begin{thebibliography}{4}
+
+\bibitem{manvcomp} Man vs. computer: Benchmarking machine learning algorithms for traffic sign recognition, J. Stallkamp, M. Schlipsing, J. Salmen, C. Igel, August 2012, Neural Networks (32), pp. 323-332
+
+\bibitem{zaklouta11}Traffic sign classification using K-d trees and Random Forests, F. Zaklouta, B. Stanciulescu, O. Hamdoun, August 2011, International Joint Conference on Neural Networks (IJCNN) 2011
+
+\bibitem{HOG}N. Dalal, B.Triggs  Histograms of oriented gradients for human detection, Proceedings of the IEEE conference on computer vision and pattern recognition, 2005(pp. 886–893).
+
+%\bibitem{fanelli_IJCV} Fanelli, Gabriele and Dantone, Matthias and Gall, Juergen and Fossati, Andrea and Van Gool, Luc, Random Forests for Real Time 3D Face Analysis, Int. J. Comput. Vision, 2013, February, 101, 3, 437--458
+
+
+\end{thebibliography}
+
+\end{document}

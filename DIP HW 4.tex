@@ -1,0 +1,75 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=1.25in,
+ right=1.25in,
+ top=1.25in,
+ bottom=1.25in,
+ }
+\usepackage{graphicx}
+
+\begin{document}
+
+\title{Assignment 4 - Question 3}
+\author{Sasank, Tharun, Rajeev}
+\date{\today}
+\maketitle
+
+Given: A is a $m \times n$ matrix, $P = A^TA$ and $Q = AA^T$.
+
+\subsection*{Part (a)}
+For any $n \times 1$ column vector $y$,
+\[y^tPy = y^tA^t Ay = (Ay)^T Ay = \|Ay\|^2 \geq 0 \]
+So, P is positive definite.
+
+For any $m \times 1$ column vector $z$,
+\[z^tQz = z^tA A^tz = (A^tz)^T A^tz = \|A^tz\|^2 \geq 0 \]
+So, Q is positive definite.
+
+Let $\lambda$ be a eigenvalue of $R$, a positive definite matrix with eigenvector $v$, then $Pv = \lambda v$. Premultiply by $v^T$.
+\[v^tRv = \lambda v^t v\]
+\[\lambda = \frac{v^tRv}{\|v\|^2} \geq 0\]
+because $R$ is positive definite. Here both $P$ and $Q$ are positive definite. So, their eigenvalues are all positive.
+
+\subsection*{Part (b)}
+Given 
+\[Pu = \lambda u\]
+\[A^tAu = \lambda u\]
+Premultiply by $A$
+\[AA^t(Au) = \lambda (Au)\]
+\[Q(Au) = \lambda (Au)\]
+So, $Au$ is a eigenvector of $Q$ with eigenvalue $\lambda$
+\\[10pt]
+Given,
+\[Qv = \mu v\]
+\[AA^tv = \mu v\]
+Premultiply by $A^t$
+\[A^t(AA^tv) = \mu (A^Tv)\]
+\[P(A^Tv) = \mu (A^tv)\]
+So, $A^tu$ is a eigenvector of $P$ with eigenvalue $\mu$. Since $P$ is $n \times n$, $u$ is a $n \times 1$ matrix.
+and since $Q$ is $m \times m$, $v$ is a $m \times 1$ matrix.
+
+\subsection*{Part (c)}
+Given,
+\[Qv_i = \mu v_i\]
+\[AA^tv_i = \mu v_i\]
+
+\[Au_i = \frac{AA^tv_i}{\|A^tv_i\|} = \frac{\mu}{\|A^tv_i\|} v_i = \gamma_i v_i \]
+where $\gamma_i = \frac{\mu}{\|A^tv_i\|} \geq 0$ because $\mu \geq 0$.
+
+\subsection*{Part (d)}
+Given $V = [u_1|u_2|u_3|....|u_n]$.
+Then $i,j$ th element of $V^TV = u_i^tu_j = 1$ if $i = j$ and $= 0$ if $i\not=j$.
+So, $V^TV = I$ i.e, $V^T = V^{-1}$ as $V$ is a $n \times n $ matrix.
+
+To show $A = U\Gamma V^t$, it is enough to show $AV = U\Gamma$ where $\Gamma$ is a diagonal matrix containing $\gamma_i$'s along diagonals.
+
+We know from part (c),  $Au_i = \gamma v_i$.
+\[AV = A[u_1|u_2|u_3|\dots|u_n] = [Au_1|Au_2|Au_3|....|Au_n] \]
+\[ = [\gamma_1v_1|\gamma_2v_2|\gamma_3v_3|....|\gamma_nv_n] = [v_1|v_2|v_3|\dots|v_n|]\Gamma = U\Gamma \].
+where  $\Gamma$ is a diagonal matrix containing $\gamma_i$'s along diagonals.
+
+
+\end{document}
