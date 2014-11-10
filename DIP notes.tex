@@ -1,0 +1,194 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=1in,
+ right=1in,
+ top=1in,
+ bottom=1in,
+ }
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{tgpagella}
+\usepackage[T1]{fontenc}
+
+\begin{document}
+\title{Image Processing Notes}
+\author{Sasank}
+\date{\today}
+\maketitle
+
+\section{Grey Level Transformations}
+Evaluation is subjective.
+\begin{description}
+\item[input]: image, $f(x,y)$
+\item[output]: image, $g(x,y) = T(f(x,y))$
+\end{description}
+Want transformations to be monotonic.
+
+\paragraph{Some transformations}
+\begin{enumerate}
+\item Negative
+\item Thresholding
+\item Contrast stretching
+\item Logarithm
+\item Power and root transformation, Gamma correction:  $y = l.(x/l)^\gamma$
+\\ $\gamma >1$: darkening,  $\gamma < 1$: adding light
+\item Histogram Processing
+\end{enumerate}
+
+\subsection{Histogram Equalization}
+Given histogram $f_x(x)$, design a function $y = T(x)$ such that $f_y(y)$ is uniform. Assume T to be monotonic.
+
+$$P(x<x_o) = P(y<T(x_o))$$
+$$F_x(x_o) = T(x_o)$$
+
+So, required transformation is $y = F_x(x)$ where $F$ is cdf of X.
+Because of discretization of space and intensity, output histogram is not exactly uniform.
+
+\subsubsection{Limitations}
+\begin{itemize}
+\item "middle" intensities don't get contrast enhanced if lots of dark or bright pixels
+\end{itemize}
+
+\subsection{Histogram Matching}
+Want histogram of y = T(x) to be G(y).
+
+$$F_y(y = T(x)) = F_x(x)$$
+$$T(x) = F_y^{-1}(F_x(x))$$
+
+
+\subsection{Adaptive Histogram Equalization - AHE}
+For each pixel p:
+\begin{enumerate}
+\item Construct NxN window around the pixel
+\item Compute histogram of the window and map intensity of centre pixel p based on this histogram
+\end{enumerate}
+Window size N has to be tuned. Small window brings out more detail but also amplifies noise in constant patches.
+
+\subsection{Contrast Limited Adaptive Histogram Equalization - CLAHE}
+Contrast amplification at a pixel value is given by slope of transformation at that pixel. For histogram equalization, slope of transformation, cdf = pdf. So, clip histogram and redistribute mass before computing cdf.
+This is very computationally expensive.
+\vspace{-10pt}
+\paragraph{Approximation}
+\begin{enumerate}
+\item Split image into MxM non overlapping tiles
+\item Compute CDF for each tile
+\item Bilinearly interpolate \textit{transformation} for all pixels based on distance from tile centers
+\end{enumerate}
+
+\section{Spatial Filtering}
+\begin{itemize}[leftmargin=0pt]
+\item[] Output pixel intensity is function of the pixel intensities in the neighbourhood. if the function is linear, linear spatial filtering. Such a filter performs convolution.
+\item[] If mask is symmetric about x and y axes, then convolved image = cross-correlated image. 
+\item[] Normalized cross correlation: subtract mean from signal and make signal unit energy before correlating.
+\item[] If a filter is \textbf{seperable} i.e, can be written as outer product $f = u v$ where u is a column matrix and v is a row matrix, convolution can be done faster. $$f*H = (u*v)*H = u*(v*H)$$
+Here, Last term can be computed in $Q(MN)+P(MN) = MN(P+Q)$ instead of $MNPQ$ steps
+\end{itemize}
+
+
+\begin{description}
+\item[Mean Filter]: Replace pixel value by mean of values in windows around pixel. Smoothens out edges. This is a separable filter.
+\item[Gaussian Filter]: Window, $g(x,y) = e^{-(x^2+y^2)/2\sigma^2}$. Blurs less and preserves more edges but removes less noise in constant patches. Separable if covariance matrix is diagonal.
+\item[Median Filter]: Replace pixel value by median of values in windows around pixel. Better for removing salt and pepper noise. On Gaussian noise, preserves edges better and can create artificial edges in smooth regions.
+\item[Image Derivative]: Sharpening and very sensitive to noise. Convolution mask for first and second derivative.
+\item[Laplacian of Guassian]: Apply Gaussian filter to smooth image, apply laplacian filter to smoothed image. "Blob detector" and gives strong positive and negative responses at edges.
+\item[Unsharp Masking]
+\end{description}
+
+\section{Bilateral Filtering}
+Problem with weighted mean filters is they fails to preserve edges while reducing noise. We want a filter which reduces noise but preserves edges.
+\paragraph{\textnormal{For Bilateral filer, at pixel p weight of q depends on}}
+\begin{enumerate}
+\item spatial distance between p and q
+\item dissimilarity between intensities at p and q
+\end{enumerate} 
+
+$$I^{filtered}(x) = \frac{1}{W_p}\sum_{x_i} I(x_i)f(||I(x_i)-I(x)||)g(||x_i-x||)$$
+$$W_p = \sum_{x_i}f(||I(x_i)-I(x)||)g(||x_i-x||)$$
+
+Here f and g usually are Gaussian. Observe that this defines different weighting mask for each pixel. So, bilateral filter is not convolution or seperable and thus slow.
+
+\subsection{Faster Implementation}
+We can compute bilateral filtering fast by rewriting it as linear filtering in different space.
+
+\begin{align*}
+I^{filtered}(x) &= \frac{1}{W_p}\sum_{x_i} I(x_i)f(||I(x_i)-I(x)||)g(||x_i-x||)\\
+ &= \frac{1}{W_p}\sum_{x_i} I(x_i)G_{sr}(||(x_i,I(x_i))-(x,I(x))||)\\
+W_p &= \sum_{x_i}G_{sr}(||(x_i,I(x_i))-(x,I(x))||)
+\end{align*}
+Where $G_{sr}$ is a higher dimensional Gaussian. This gives us motivation to construct at a higher dimensional space $(x,I(x))$ as following:
+\begin{enumerate}
+\item Value at $(p,I(p))$ is $I(p)$ for every pixel p in image
+\item Assign 0 everywhere
+\end{enumerate} 
+We can apply separable Gaussian filtering in this space and get values at $(p,I(p))$ to get numerator. To get denominator create similar space with values 1 instead of $I(p)$.
+\medskip
+\\Strategy to speed up computation is to downsample constructed space before applying Gaussian convolution and then upsample. 
+
+\subsection{Cross/Joint Bilateral Filter}
+Get 2 kinds of weights from 2 different images.
+
+\subsection{Limitations}
+\begin{enumerate}
+\item Texture softer than intensity kernel standard deviation is removed
+\item "Staircase" artefacts: constant intensity pieces
+\end{enumerate}
+
+\section{Patch-Based Filtering}
+Problem with Bilateral filter is intensity based similarity is solely based on intensity difference; texture information is not best used. Texture is a repeated spatial pattern of intensities either geometric or stochastic.
+$$I^*(k) = \sum_{j}w_h(j,k)I(j)$$
+Design weights w based on patches around pixel; Similar patch has larger weight.
+$$w_h(j,k) = \frac{\exp{(-||I(R_j)-I(R_k)||^2/h^2)}}{\sum_{j}\exp{(-||I(R_j)-I(R_k)||^2/h^2)}}$$
+Here, $R_j$ represent a patch around pixel j and $||.||$ is $L_2$ norm.
+\medskip
+
+We are dealing with a regression problem where independent variable is intensities of the patch and dependent variable is intensity value at centre pixel of the patch. This is non linear regression.
+
+\subsection{Nonlinear Regression}
+\textit{Objective}: Given n pairs $(x_i, y_i)$ and $x_0$, find $y_0$.
+\begin{description}
+\item[K nearest neighbour]: Given $x_0$, find K nearest neighbours $\{x_j\}$ and find average of these k neighbours.
+\item[Kernel Regression]: $$y_0 = \frac{\sum_i K_h(x-x_i)y_i }{\sum_i K_h(x-x_i)}$$ where $K_h$ is a kernel function with bandwidth h.
+\end{description}
+In context of patch based filtering, we are doing kernel regression on patches to find centre pixel intensity.
+\begin{enumerate}
+\item Updates of adjacent pixels are interlinked
+\item Initial neighbourhoods are noisy
+\end{enumerate}
+To reduce artifacts, take a small step towards update and perform multiple passes over the image.
+Patches can be selected either in a window around pixel or randomly using a Gaussian distribution centred around pixel.
+
+\section{Filtering in Fourier Domain}
+\subsection{Fourier Transform}
+Topics covered:
+\begin{enumerate}
+\item Fourier series
+\item Fourier transform
+\item Sampling theorem
+\item Discrete time Fourier transform
+\item Discrete Fourier transform
+\end{enumerate}
+Be careful with convolution and FFT domain. You might have to pad zeros to vectors before convolution.
+\subsection{Filtering in Fourier Domain}
+Basic strategy:
+\begin{enumerate}
+\item Compute DFT of image Ff(u,v)
+\item Modify values in DFT domain
+\item Compute IDFT to these values
+\end{enumerate}
+Some filters:
+\begin{itemize}
+\item Lowpass, Highpass, Bandpass filters
+\item Butterworth filter -"Maximally flat magnitude filter"
+\item Gaussian low pass filter
+\end{itemize}
+Applications
+\begin{itemize}
+\item Remove periodic patterns
+\item Some convolution filters are not separable. But DFT is! 
+
+\end{itemize}
+
+\end{document}

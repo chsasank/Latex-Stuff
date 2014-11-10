@@ -119,7 +119,7 @@ A set $G$ with binary operation $*$ defined on it is called a group if
 \item For every element $a$, there exists a inverse $b$, $a*b = b*a = e$
 \end{enumerate}
 Order of finite group is its cardinality.
-
+\subsection{Some Definitons and Properties}
 \begin{itemize}
 \item \textbf{Cyclic group} $G = (g)$, for some element $g \in G$. It is called generator of $G$.
 \item \textbf{Group isomorphism} is a bijection between two groups which `preserves' binary operation
@@ -146,10 +146,10 @@ A set $F$ together with two binary operations $+$ and $*$ is a field if
 \end{enumerate}
 A finite field is a field with a finite cardinality.
 \end{defn}
-
+\subsection{Some Definitons and Properties}
 \begin{itemize}
 \item \textbf{Field isomorphism} is a bijection between two fields which `preserves' binary operations $+$ and $*$
-\item Every field $F$ with a prime cardinality $p$ is isomorphic to $\mathbb{F}_p$. (Prove this by observing that $F = (1)$)
+\item Every field $F$ with a prime cardinality $p$ is isomorphic to $\mathbb{F}_p$. \textsl{(Prove this by observing that $F = (1)$)}
 \item A nonempty subset of $S$ of a field $F$ is called a \textbf{subfield} of $F$ if for all $\alpha, \beta \in S$
 		\begin{itemize}
 		\item $\alpha + \beta \in S$
@@ -158,15 +158,30 @@ A finite field is a field with a finite cardinality.
 		\item $-\alpha^-1 \in S\setminus\{0\}$
 		\end{itemize}
 
-\item Let $F$ be a field with multiplicative identity $1$. The \textbf{characteristic} of $F$ is the smallest integer $p$ such that $1+1+1+\dots+1 \text{ (p times)} = 0$. The characteristic of a finite field is prime. (If not, its divisors will be characteristic contradicting minimality)
-\item 
+\item Let $F$ be a field with multiplicative identity $1$. The \textbf{characteristic} of $F$ is the smallest integer $p$ such that $1+1+1+\dots+1 \text{ (p times)} = 0$. The characteristic of a finite field is prime. \textsl{(If not, its divisors will be characteristic contradicting minimality)}
+\item Every finite field has a prime subfield \textsl{($S = (1)$ is one such subfield)}
+\item Any finite field has $p^m$ elements where $p$ is a prime and $m$ is a positive integer.
+\textsl{(Let p be characterstic of $F$, observe that $F$ is a vector field over $\mathbb{F}_p$)}
 \end{itemize}
 
+\subsection{Polynomials over a Field}
+\begin{defn}
+A nonzero polynomial over a field $F$ is an expression $f (x ) = f_0 + f_1 x + f_2 x^2 +\dots + f_m x^m$ where $f_i \in F$ and $f_m \not= 0$. If $m =1$, $f(x)$ is said to be monic. 
+The set of all polynomials over a field $F$ is denoted by $F[x]$.
+\end{defn}
 
+\begin{itemize}
+\item A polynomial $a(x) \in F[x]$ is said to be a \textbf{divisor} of a polynomial $b(x) \in F[x]$ if $b(x) = q(x)a(x)$ for some $q(x) \in F[x]$. Trivial divisors are $\alpha$ and $\alpha f(x)$, $\alpha \in  F \setminus \{0\}$
 
+\item An \textbf{irreducible polynomial} is a polynomial of degree $1$ or more which has only trivial divisors. A monic irreducible polynomial is called a \textbf{prime polynomial}.
 
+\item Set of reminders when polynomials in $\mathbb{F}_p[x]$ are divided by a prime polynomial $g(x) \in \mathbb{F}_p[x]$ of degree $m$ is a field of order $p^m$.
 
+\item Every monic polynomial $f(x) \in F[x]$ can be \emph{uniquely} written as a product of prime factors $a_i(x) \in F[x]$. 
 
+\item If $f(x) \in F[x]$ has a degree $1$ factor $x - \alpha$ for some $\alpha \in F$ , then $\alpha$ is called a \textbf{root} of $f(x)$. $f(x)$ of degree $m$ can have at most $m$ roots.\item In any field $F$, the multiplicative group $F^*$ of nonzero elements has at most one cyclic subgroup of any given order $n$. If it does, then its elements $\{ 1,\beta, \beta^2, \dots, \beta^{n-1}\}$ satisfy $$x^n-1 = (x-1)(x-\beta)(x-\beta^2)\dots(x-\beta^{n-1})$$
+
+\item Elements of a finite field $F_q$ are $q$ distinct roots of $x^q-x$. \textsl{( $|(\beta)|$ divides $q-1$. So, $\beta^{(q-1)} = 1$ for all nonzero $\beta $ )}\end{itemize}
 
 
 
