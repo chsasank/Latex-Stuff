@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper,11pt]{article}
 \usepackage{geometry}
  \geometry{
  a4paper,
@@ -12,7 +12,9 @@
 \usepackage{amsmath}
 \usepackage{tgpagella}
 \usepackage[T1]{fontenc}
-
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{todonotes}
 \begin{document}
 \title{Image Processing Notes}
 \author{Sasank}
@@ -190,5 +192,48 @@ Applications
 \item Some convolution filters are not separable. But DFT is! 
 
 \end{itemize}
+
+\section{Face Recognition}
+Given a database of face images of people, and a new test image, answer the following question - "The test image contains the face of which individual from the database?"
+\paragraph{Challenges}
+\begin{itemize}
+\item Face detection
+\item Pose variation
+\item Illumination variation
+\item Expression variation
+\item Variation of facial accessories/Occlusions
+\item Blur/noise/scanner artifacts
+\end{itemize}
+
+\subsection{Naive Method}
+Choose closest match in database according to following distance measure:
+\[||I - J||^2 = \sum_i \sum_j (I_{ij} - J_{ij})^2 \]
+Very bad algorithm.
+
+\subsection{PCA - Eigenfaces}
+Consider N vectors (or points) $x_i$, each containing $d$ (usually $d \gg N$) elements, each represented as a column vector. 
+Aim is to extract $k$ most 'significant' features. i.e, we want to project vectors in $\mathbb{R}^d$ to $\mathbb{R}^k$. This is called \textbf{dimensionality reduction} in general. 
+
+%PCA is a linear dimensionality reduction technique. 
+Let us consider a linear transformation mapping the original d-dimensional image space into an k-dimensional feature space, where k < d. 
+The new feature vectors $y_i \in \mathbb{R}^m$ are defined by the following \emph{linear} transformation:
+\[ y_i = W^T x_i\]
+where $W \in \mathbb{R}^{d \times n}$ is a matrix with orthogonal columns.
+
+If the total scatter matrix $S_T$ is defined as 
+\[S_T = \sum_{i = 1}^N (x_i - \mu )(x_i - \mu)^T \]
+where $\mu \in \mathbb{R}^n$ is the mean image of all samples. 
+Then after applying the linear transformation $W^T$, the scatter of the transformed featurevectors $\{y_1 , y_2, \dots, y_N \}$is $W^T S_T W$. 
+
+In PCA, the projection $W_{opt}$ is chosen to maximize the determinant of the total scatter matrix of the projected samples, i.e.,
+\[W_{opt} = \arg \max_W |W^TS_TW| = [w_1 w_2 \dots w_k]\]
+where $w_i$ are the set of $d$-dimensional eigenvectors of $S_T$ corresponding to $m$ largest eigenvalues. These are referred to as \textbf{eigenfaces}.
+
+
+\todo{later}
+
+\section{SVD}
+\todo{later}
+
 
 \end{document}

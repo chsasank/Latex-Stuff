@@ -181,8 +181,57 @@ The set of all polynomials over a field $F$ is denoted by $F[x]$.
 
 \item If $f(x) \in F[x]$ has a degree $1$ factor $x - \alpha$ for some $\alpha \in F$ , then $\alpha$ is called a \textbf{root} of $f(x)$. $f(x)$ of degree $m$ can have at most $m$ roots.\item In any field $F$, the multiplicative group $F^*$ of nonzero elements has at most one cyclic subgroup of any given order $n$. If it does, then its elements $\{ 1,\beta, \beta^2, \dots, \beta^{n-1}\}$ satisfy $$x^n-1 = (x-1)(x-\beta)(x-\beta^2)\dots(x-\beta^{n-1})$$
 
-\item Elements of a finite field $F_q$ are $q$ distinct roots of $x^q-x$. \textsl{( $|(\beta)|$ divides $q-1$. So, $\beta^{(q-1)} = 1$ for all nonzero $\beta $ )}\end{itemize}
+\item Elements of a finite field $F_q$ are $q$ distinct roots of $x^q-x$. \textsl{( $|(\beta)|$ divides $q-1$. So, $\beta^{(q-1)} = 1$ for all nonzero $\beta $ )}\item $F_q^*$ is cyclic.
+\todo{look at proof if time available}\end{itemize}
+
+\section{Minimal Polynomials}
+Let $F_q$ be finite field with characteristic $p$. Thus, $F_q$ has a subfield isomorphic to $\mathbb{F}_p$. 
+Consider polynomial $x^q - x \in F_q[x]$, it is also a polynomial in $F_p[x]$. Factorize $x^q - x$ into product of prime polynomials in $F_p[x]$
+\[ x^q - x = \prod_i g_i(x) \]
+$g_i(x)$ are called the \textbf{minimal polynomials} of $F_q$.
+
+Since, $x^q - x = \prod_{\beta \in F_q}(x-\beta) = \prod_i g_i(x)$, 
+$g_i(x) = \prod_{j=1}^{\deg{g_i(x)}}(x-\beta_{ij})$. So, each $\beta \in F_q$ is a root of exactly one minimal polynomial of $F_q$, called the minimal polynomial of $\beta$.
+
+\begin{itemize}
+\item Let $g(x)$ be the minimal polynomial of $\beta \in F_q$. $g(x)$ is the monic polynomial of least degree in $F_p[x]$ such that $g(\beta) = 0$. 
+\textsl{( If $h(x)$ is such least degree polynomial, prove that it should divide $g(x)$. But $g(x)$ is prime polynomial. So $h(x) = g(x)$ ) }
+
+\item For any $f(x) \in F_p(x)$, $f(\beta) = 0$ iff $g(x)$ divides $f(x)$ \textsl{ ( use previous result )}
+
+\item For any $g(x) \in F_q(x)$, $g^p(x) = g(x^p)$ iff $g(x) \in F_p[x]$
+
+\item Let $g(x)$ be the minimal polynomial of $\beta \in F_q$, If $q = p^m$, then the roots of $g(x)$ are of the form
+\[
+\beta, \beta^p, {\beta^p}^2, \dots , {\beta^p}^{n-1}
+\]
+where $n$ is a divisor of $m$.
+\textsl{ ( Using previous result, if $y$ is a root, $y^p$ is also a root. If $n$ is smallest integer that ${\beta^p}^2 = \beta$, show that $n$ divides $m$ using the fact that ${\beta^p}^m = \beta$. Now show these can be only roots by invoking previous results.)} 
+\end{itemize}
 
 
+\section{BCH Codes}
+\begin{defn}
+Let $\alpha$ be a primitive element in $F_{2^m}$. The generator polynomial $g(x)$ of the t-error-correcting BCH code of length $2^m-1$ is the least degree polynomial in $\mathbb{F}_2[x]$ that has 
+\[\alpha, \alpha^2, \alpha^3, \dots, \alpha^{2t}\] as its roots.
+If $\phi_i(x)$ is minimal polynomial of $\alpha^i$, then $g(x)$ is LCM of $\phi_i(x), i = 1,2,\dots 2t$
+\end{defn}
+
+\begin{itemize}
+\item For BCH code of parameters $m$ and $t$, we have
+	\begin{itemize}
+	\item $n-k\leq mt$
+	\item $d_{min} \geq 2t+1$
+	\end{itemize}
+
+\item A degree $m$ irreducible polynomial in $F_2[x]$ is said to be primitive if the smallest value of $N$ for which it divides $X^N+1$ is $2^m-1$. The minimal polynomial of a primitive element is a primitive polynomial. \todo{How?}
+
+\item Single error correcting BCH codes are Hamming Codes. \textsl{ ( $v(\alpha) = 0$ for code word $v$. Write $\alpha^i$ as a tuple)}
+
+\item degree of generator polynomial $\deg{g(x)} \leq mt$. i.e, $n-k\leq mt$
+\textsl{ ( Observe that even powers of $\alpha$ has same minimal polynomial as some odd power before it. Now, LCM of $m$ minimal polynomials $\leq mt$ )}
+
+\item $d_{min} \geq 2t+1$ \todo{complete this.}
+\end{itemize}
 
 \end{document}
