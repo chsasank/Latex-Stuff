@@ -1,0 +1,54 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=1.25in,
+ right=1.25in,
+ top=1.25in,
+ bottom=1.25in,
+ }
+\usepackage{graphicx}
+%\usepackage[T1]{fontenc}
+%\usepackage{todonotes}
+%\usepackage{graphicx}
+\begin{document}
+
+\title{Courses and Basic Summary}
+\author{Sasank}
+\date{\today}
+\maketitle
+\tableofcontents
+
+\section{Image Processing}
+
+\section{Stochastic Optimization}
+\begin{itemize}
+\item Most machine learning is Stochastic Optimization. We try to minimise expectation of cost function. Regression for example tries to minimise $\mathbf{E}(Y - f_\beta(X))$.
+
+\item \textbf{Stochastic Gradient Scheme}
+\[x(n+1) = x(n) - a(n)[\nabla f(x(n)) + M(n)] \]
+will converge to minimum. Note the noisy gradient. Many other similar schemes exist in literature. Back propagation as a stochastic gradient scheme.
+
+\item \textbf{MCMC}: Proposal distribution $q(j|i)$, accept this step with probability $r(j|i)$. Then overall transition probability $p(j|i) = q(j|i)r(j|i)$. 
+Manipulate $r(j|i)$ to get desired stationary distribution $\pi(i)$. $r(j|i) = \delta(i,j)/\pi(i)q(j/i)$ works if $\delta(i,j) = \delta(j,i)$. 
+
+Can choose $\delta(i,j) = \max(\pi(i)q(j/i),\pi(j)q(i/j))$, Metropolis-Hastings Scheme.
+
+
+\end{itemize}
+\section{Graph Theory}
+
+\section{Information Theory}
+
+\section{Error Correcting Codes}
+
+\section{Real Analysis}
+
+\section{Abstract Algebra}
+
+\section{DSP}
+
+
+Content
+\end{document}

@@ -1,0 +1,3 @@
+waterlevel = 0.4597
+diff = 9.0463e-08
+1124 iterations
