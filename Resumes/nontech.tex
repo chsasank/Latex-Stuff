@@ -1,0 +1,269 @@
+% resume.tex
+%
+% (c) 2002 Matthew Boedicker <mboedick@mboedick.org> (original author) http://mboedick.org
+% (c) 2003 David J. Grant <dgrant@ieee.org> http://www.davidgrant.ca
+% (c) 2007 Todd C. Miller <Todd.Miller@courtesan.com> http://www.courtesan.com/todd
+% (c) 2009-2012 Derek R. Hildreth <derek@derekhildreth.com> http://www.derekhildreth.com 
+%This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/1.0/ or send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
+
+% GENERAL NOTE:  There may be some notes specific to myself.  If you're only interested in my LaTeX source or it doesn't make sense, please disregard it.
+
+\documentclass[a4paper,10pt]{article}
+\title{2-Page-nontech}
+
+%-----------------------------------------------------------
+\usepackage[a4paper]{geometry}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage[pdftex]{hyperref}
+\usepackage{enumitem}
+
+
+\hypersetup{
+    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=black 
+    %urlcolor=mygreylink     % can put red here to better visualize the links
+}
+\urlstyle{same}
+\definecolor{mygrey}{gray}{.85}
+\definecolor{mygreylink}{gray}{.40}
+\textheight=9.0in
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Adjust margins
+%\addtolength{\oddsidemargin}{-0.375in}
+%\addtolength{\evensidemargin}{0.375in}
+%\addtolength{\textwidth}{0.5in}
+%\addtolength{\topmargin}{-0.375in}
+%\addtolength{\textheight}{0.75in}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=0.75in,
+ right=0.75in,
+ top=0.75in,
+ bottom=0.75in,
+ }
+
+
+\setlist[itemize]{label = {--}}
+
+%-----------------------------------------------------------
+%Custom commands
+\newcommand{\resitem}[1]{\item #1 \vspace{-2pt}}
+
+\newcommand{\resheading}[1]{
+	{\large \colorbox{mygrey}{\begin{minipage}{\textwidth}{\textbf{#1 \vphantom{p\^{E}}}}\end{minipage}}}
+}
+
+\newcommand{\ressubheading}[4]{
+	\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+		\textbf{#1} & #2 \\
+		\textit{#3} & \textit{#4} \\
+	\end{tabular*}\vspace{-6pt}
+}
+
+\newcommand{\ressubheadingWithGuide}[3]{%
+
+	\textbf{#1} \hfill \textit{#2}\null\\
+	\textit{\small #3} %
+	\vspace{-4pt}
+}
+%\newcommand{\ressubheadingWithGuide}[3]{
+%	\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+%			\textbf{#1} & \textit{#2} \vspace{-2pt}\\ 
+%			\textit{\footnotesize #3} &
+%	\end{tabular*}\vspace{-6pt}
+%}
+%\newcommand{\ressubheadingother}[2]{
+%	\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+%			\textbf{#1} & \textit{#2} \\
+%	\end{tabular*}\vspace{-6pt}
+%}
+\newcommand{\ressubheadingother}[2]{
+	\textbf{#1} \hfill \textit{#2}\null
+	\vspace{-4pt}
+}
+\newcommand{\ressubsubheading}[2]{
+\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+		\textit{#1} & \textit{#2} \\
+\end{tabular*}\vspace{-6pt}}
+
+%-----------------------------------------------------------
+%General Resume Tips
+%   No periods!  Technically, nothing in this document is a full sentence.
+%   Use parallelism by ending key words with the same thing,  i.e. "Coordinated; Designed; Communicated".
+%   More tips on bottom of this LaTeX document.
+%-----------------------------------------------------------
+
+\begin{document}
+
+
+\newcommand{\mywebheader}{
+\begin{tabular*}{7in}{l@{\extracolsep{\fill}}r}
+	\textbf{\href{http://www.home.iitb.ac.in/~sasank}{\LARGE Sasank Chilamkurthy}} & \href{mailto:sasank@iitb.ac.in}{sasank@iitb.ac.in}\\
+	 & \href{http://home.iitb.ac.in/~sasank}{http://home.iitb.ac.in/\textasciitilde sasank} \\
+	\end{tabular*}
+\\
+\vspace{0.1in}}
+
+% CHANGE HEADER SOURCE HERE
+%\mywebheader
+\vspace*{1.6in}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Scholastic Achievements} 
+	\begin{itemize}\itemsep -1pt
+    	\item Received \textbf{Undergraduate Research Award} for outstanding research on Fractional Fourier Transform %under supervision of Prof. VM Gadre, IIT Bombay.
+		\item Awarded \textbf{Institute Academic Prize} for exceptional academic performance in the year 2013-14
+        \item Completed Minor degree in \textbf{Mathematics} with CPI of 9.25 and currently pursuing Honors
+		\item \textbf{One of 14} selected from India for \textbf{ITCSC-INC Winter School} 2014 organized by CUHK, Hong Kong.
+		\item Ranked \textbf{28th} in India in \textbf{IIT JEE} 2011 exam taken by more than 500,000 students
+		\item Secured \textbf{3rd rank} in \textbf{EAMCET} 2011 written by 300,000 students
+%		\item Scored \textbf{422} out of \textbf{450} marks in BITSAT 2011
+		\item Won \textbf{Gold medal} in Indian National \textbf{Chemistry Olympiad} and attended the Orientation cum Selection Camp for International Chemistry Olympiad 2011
+		\item Among the \textbf{Top 300} in the country to be selected for Indian national \textbf{Physics} olympiad and Indian national \textbf{Astronomy} olympiad. 
+    \end{itemize}
+%%%%%%%%%%%%%%%%%%%%%
+\resheading{Internships and Research Experience}
+        	\ressubheadingWithGuide{Coded Modulation for Coherent Optical Communication Systems}{\textit{May 2014 - July 2014}}{Guide: Prof. LA Rusch, Centre d'optique,photonique et laser (COPL), Quebec}
+            	\begin{itemize}\itemsep -1pt
+              		 \item \textbf{Simulated} 16 QAM coherent modulation for optical communication system in \textbf{MATLAB} and performed \textbf{Monte-Carlo} simulations to obtain BER vs OSNR curves for various lasers and signal constellations
+					\item Collected raw data from back-to-back \textbf{experiments} and extracted phase data from raw data with offline carrier \textbf{Phase Recovery DSP} algorithms
+					\item Analysed this data to evaluate the coding gain of \textbf{Multi-level coded modulation} (MLCM) for a constellation designed to mitigate ENOB limitations of DAC used in modulation
+	    		\end{itemize}
+
+        	\ressubheadingWithGuide{Fractional Fourier Transform and Chirp Parameter Estimation}{\textit{May 2013-- July 2013}}{Guide: Prof. V.M.Gadre, IIT Bombay}
+            	\begin{itemize}\itemsep -1pt
+            	\item Surveyed literature on Fractional Fourier Transform and on various ways to discretize it
+                \item \textbf{Formulated} and \textbf{proved} correctness of a \textbf{DSP algorithm} to estimate chirp parameters from noisy samples. Evaluated accuracy of the algorithm in presence of noise by simulating the setup in MATLAB
+				\item Proved \textbf{Uncertainity Principle} for a new generalised transform extending fractional Fourier transforms
+				%\item Awarded Undergraduate Research Award for this project
+				\end{itemize}
+				
+        	\ressubheadingWithGuide{Optoelectronic Emitters : Seminar at Indo-European Winter Academy}{\textit{December 2013}}{Tutor: Prof. N.DasGupta, IIT Madras}
+            	\begin{itemize}\itemsep -1pt
+					\item One of 5 to represent IIT Bombay at Indo-European winter academy 2013, Guwahati organised jointly by 7 IITs, FAU-Erlangen-Nuremberg, KTH Stockholm
+					\item \textbf{Presented a 1 hour seminar talk} on Optoelectronic Emitters covering physical principles and devices
+					\item Attended the course ``High Performance Computing with applications in Electrical Engineering, Materials and processes" which involves similar seminar talks on advanced topics and intense discussion
+				\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Positions of Responsibility}
+
+			\ressubheadingother{Teaching Assistant}{}
+
+			\begin{description} [labelindent=*] \itemsep -1pt
+					\item[MA 105]: Calculus \hfill \textit{Autumn 2012,13,14}
+					\item[MA 106]: Linear Algebra \hfill \textit{Spring 2014}
+					\item[MA 108]: Differential equations\hfill \textit{Spring 2014}
+				\end{description}
+			\vspace{-15pt}
+			\begin{itemize}
+			\item \textbf{Tutored} 40 strength class \textbf{once a week} clarifying doubts among other duties like scrutinizing quizzes
+			\end{itemize}
+
+
+			\ressubheadingother{Joint Secretary, Electrical Engineering Students Association}{2013-14}
+			\begin{itemize} \itemsep -1pt
+				\item Restructured the policy of SPAS to streamlined functioning in coordination with \textbf{50 professors} which led to a 50 \% increase in number of projects floated and a \textbf{70 \% increase} in successfully completed projects
+				\item Planned and successfully executed 2 outings for 300 students handling a budget of \textbf{INR 1,20,000}
+			\end{itemize}
+
+			\ressubheadingother{Publicity Manager, Aagomani 2013, Annual festival of EE Department}{2012-13}
+			\begin{itemize}\itemsep -1pt
+				\item Increased outreach of events leading to increase in footfall by 200\% by handling budget of \textbf{INR 30,000}  
+				\item Collaborated with Technophilia in publicizing in colleges all over India
+			\end{itemize}
+		
+%%%%%%%%%%%%%%%%%%%%%    
+\resheading{Projects Undertaken}
+    		\ressubheadingWithGuide{Pipelined ARM Processor}{\textit{Spring 2014}}{Guide: Prof. Virendra Singh, IIT Bombay}
+            	\begin{itemize}\itemsep -1pt
+            	\item Architected a \textbf{6-stage pipelined} processor based on the \textbf{ARM7TDMI} Instruction Set
+				\item Simulated the execution of instructions after designing the processor using \textbf{Verilog HDL}
+            	\end{itemize}
+
+    		\ressubheadingWithGuide{LZW compression algorithm and decoding LDPC codes}{\textit{Spring 2014}}{Guide: Prof. Ganesh Ramakrishnan, IIT Bombay}
+            	\begin{itemize}\itemsep -1pt
+            	\item Programmed \textbf{Lempel-Zev-Welch} compression and uncompression algorithm in \textbf{Java}
+				\item Achieved about \textbf{50 \% compression} ratio in the compressing large text files
+				\item Implemented decoding of \textbf{LDPC codes} using \textbf{sum-product algorithm} in Java using specially designed data structure: Factor Graph
+            	\end{itemize}
+
+
+
+        	\ressubheadingWithGuide{Wireless Communication using Amplitude Shift Keying (ASK)}{\textit{Autumn 2013}}{Guide: Prof. J.Mukherjee, IIT Bombay}
+            	\begin{itemize}\itemsep -1pt
+                \item Designed \textbf{Analog circuits} for ASK modulation and demodulation for medium wave band
+                \item Transmitted and received the modulated waveforms wirelessly through \textbf{monopole antennae}
+                \item Used a microcontroller to send bit data and another to receive the data using \textbf{UART protocol} over this channel, thereby transmitting a text message wirelessly
+                \end{itemize}
+
+        	\ressubheadingWithGuide{Photodetection using LEDS}{\textit{Spring 2013}}{Guide: Prof. S.Lodha, IIT Bombay}
+        		\begin{itemize}\itemsep -1pt
+        		\item Used LEDs to \textbf{sense light} rather than using photodiodes using a lesser known technique
+				\item Described hardware using \textbf{Verilog} and implemented it on \textbf{FPGA} to sense light incident on LED array
+				\item Displayed the pattern of incident light on \textbf{graphic LCD} accurately
+				\end{itemize}
+
+	%\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Key Courses}
+\begin{description}
+\item[Electical Engineering]:  Information Theory, Error Correcting Codes, Digital Signal Processing, Stochastic Optimisation, Probability and Random Processes
+\item[Mathematics \& CS]: Graph Theory, Image Processing, Data structures \& Algorithms, Real and Complex Analysis, Abstract Algebra
+\item[Others]: Quantum Information and Computing, Data Analysis and Interpretation, Philosophy
+\end{description}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Extra-Curricular Activities}
+	\begin{itemize}[label={--}]\itemsep -1pt
+		\item Attended NSERC summer school on \textbf{effective communication} at McGill university, Montreal. Practiced presenting \textbf{status reports} and \textbf{pitching in a project} in presence of industry experts.
+		\item Awarded \textit{bien} grade in Basic \textbf{French} course attested by Alliance Francaise de Bombay
+		\item Attended the \textbf{Annual Training Camp} organised by 2, MAH Regiment NCC and passed the ‘B’ certificate examination under the authority of Ministry of Defence, Govt. of India
+		\item \textbf{Coordinator} for competitions group of Techfest 2012. Planned and organised the event International Robotics Challenge which had 300 participants from over 5 countries
+	\end{itemize}
+
+\end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% GENERAL RESUME NOTES %
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Need to brush up on the skills section?  Here are some really good ideas:
+
+% - Communication: The ability to express and interpret ideas and convey knowledge. 
+% Skills like speaking effectively, writing concisely, listening attentively, expressing ideas, 
+% reporting information, editing, interviewing, and facilitating group discussion. 
+ 
+% - Research and Planning: The ability to search for specific knowledge and formulate a 
+% program for a definite course of action. Skills like forecasting, predicting, identifying 
+% issues, finding alternatives, gathering information, solving problems, setting goals, 
+% extracting information, and developing strategies. 
+ 
+% - Human Relations: The ability to apply interpersonal skills to resolve conflict, relate to 
+% people, and help people. Skills like providing support for others, listening, delegating 
+% with respect, representing others, asserting, developing rapport, and perceiving 
+% feelings. 
+ 
+% - Management, Organization, Leadership: The ability to supervise others and guide 
+% individuals and groups towards the completion of tasks. Skills like managing groups, 
+% selling ideas, making decisions, managing conflict, coordinating tasks, teaching, 
+% enlisting help. 
+
+% Source: 
+% http://www.squawkfox.com/2009/03/08/6-action-words-that-make-your-resume-rock/
+
+% Other Resources: 
+% http://www.tvmier.com/Resume_Education.html
+
