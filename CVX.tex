@@ -320,7 +320,7 @@ where $A^*:\Rn \rightarrow V$ is adjoint of $A$. Denote feasible set of CD by $F
 \item Let CP and CD be both feasible and let one of them have an interior. Then there is $0$ duality gap.
 \item Let CP and CD be both feasible and have an interior. Then both have optimal solutions with  $0$ duality gap.
 \end{enumerate}
-To prove this we need to prove Theorem of alternatives/Fracas Lemma.
+To prove this we need to prove theorem of alternatives/Farkas' lemma.
 
 \subsection{Theorem of alternatives}
 \begin{enumerate}
@@ -328,7 +328,7 @@ To prove this we need to prove Theorem of alternatives/Fracas Lemma.
 Then $\{x \mid Ax = b, x\in K \}$ has a  feasible solution $x$ iff $\{\lambda \mid  -A^* \lambda \in K^*, \inrpd{b}{\lambda} >0\}$ has no feasible solution.
 
 \item Consider $\{(\lambda,s) \mid c - A^*\lambda  = s \in K \}$ for a proper cone $K \subseteq V$ and $A: V \rightarrow \Rn$. Suppose $\exists x$ such that $Ax = 0, x \in \intr(K^*)$. \\
-Then, $\{(y,s) \mid c - A^*\lambda  = s \in K \}$  has a  feasible solution $(\lambda,s)$ iff $\{x \mid Ax = 0, x\in K^*, \inrpd{c}{x} < 0 \}$ has no feasible solution.
+Then, $\{(\lambda,s) \mid c - A^*\lambda  = s \in K \}$  has a  feasible solution $(\lambda,s)$ iff $\{x \mid Ax = 0, x\in K^*, \inrpd{c}{x} < 0 \}$ has no feasible solution.
 \end{enumerate}
 
 \paragraph{Proof of 1:}
@@ -375,8 +375,8 @@ This proves that $\{x \mid Ax = 0, x\in K^*, \inrpd{c}{x} < 0 \}$ is non empty.
 $\square$
 
 
-
-
+\subsection{Proof of Strong Duality}
+We will now apply Farkas' lemma to prove strong duality theorem.
 
 
 
