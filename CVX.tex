@@ -92,10 +92,10 @@ Inner product space is a vector space with a inner product defined on it. Inner 
 \begin{description}
 \item[Conjugate symmetry] $\inrpd{x}{y}= \conj{\inrpd{y}{x}}$
 \item[Linearity] $\inrpd{ax}{y} = a  \inrpd{x}{y}$ , $\inrpd{x+y}{z} =  \inrpd{x}{z}+ \inrpd{y}{z}$
-\item[Positive definiteness] $\inrpd{x}{y} \geq 0$ with equality iff $x = 0$
+\item[Positive definiteness] $\inrpd{x}{x} \geq 0$ with equality iff $x = 0$
 \end{description} 
 
-An inner product induces a norm as follows $\|x\| = \inrpd{x}{x}$. Thus every inner product space is a normed vector space.
+An inner product induces a norm as follows $\|x\| = \sqrt{\inrpd{x}{x}}$. Thus every inner product space is a normed vector space.
 Note that not all norms are inner products. For example consider p-norm $\|x\|_p = \left(\sum_{i = 1}^n |x_i|^p \right)^{1/p}$ for $x \in \Rn$. This is an inner product if and only if $p = 2$
 
 \subsection{Banach and Hilbert Spaces}
@@ -176,7 +176,7 @@ Therefore we can simplify our notion of (topological) dual cone as \[C^* = \{y \
 \item $\intr(C^*) = \{y \in X \mid \inrpd{y}{x} > 0 \; \forall x \in X \}$
 \item If $C$ is a cone and $\intr(C) \neq \emptyset$, then $C^*$ is pointed. i.e if $x \in C^*$ and $-x \in C^*$ then $x = 0$.
 \item If C is a closed convex cone, $C^{**} = (C)$. Prove this using strict separating hyperplane theorem.
-\item If C is a cone, $C^{**} = \operatorname{closure}(C)$
+\item If C is a convex cone, $C^{**} = \operatorname{closure}(C)$
 \item If $\operatorname{closure}(C)$ is pointed then $ \intr(C^*) \neq \emptyset$
 \end{itemize}
 
@@ -327,9 +327,52 @@ To prove this we need to prove Theorem of alternatives/Fracas Lemma.
 \item Consider $\{x \mid Ax = b, x\in K \}$ for a proper cone $K \subseteq V$ and $A: V \rightarrow \Rn$. Suppose $\exists \lambda$ such that $-A^* \lambda \in \intr(K^*)$. \\
 Then $\{x \mid Ax = b, x\in K \}$ has a  feasible solution $x$ iff $\{\lambda \mid  -A^* \lambda \in K^*, \inrpd{b}{\lambda} >0\}$ has no feasible solution.
 
-\item Consider $\{(y,s) \mid c - A^*\lambda  = s \in K \}$ for a proper cone $K \subseteq V$ and $A: V \rightarrow \Rn$. Suppose $\exists x$ such that $Ax = 0, x \in \intr(K^*)$. \\
+\item Consider $\{(\lambda,s) \mid c - A^*\lambda  = s \in K \}$ for a proper cone $K \subseteq V$ and $A: V \rightarrow \Rn$. Suppose $\exists x$ such that $Ax = 0, x \in \intr(K^*)$. \\
 Then, $\{(y,s) \mid c - A^*\lambda  = s \in K \}$  has a  feasible solution $(\lambda,s)$ iff $\{x \mid Ax = 0, x\in K^*, \inrpd{c}{x} < 0 \}$ has no feasible solution.
 \end{enumerate}
+
+\paragraph{Proof of 1:}
+Let $\bar{\lambda}$ be such that $-A^* \bar{\lambda} \in K^* $ and let $\{x \mid Ax = b, x\in K \}$ has a feasible solution $\bar{x}$. Then
+\[
+-\inrpd{\bar{\lambda}}{b} = -\inrpd{\bar{\lambda}}{A\bar{x}} = \inrpd{-A^*\bar{\lambda}}{\bar{x}} \geq 0
+\]
+Thus $\{\lambda \mid  -A^* \lambda \in K^*, \inrpd{b}{\lambda} >0\}$ has no solution, i.e. empty.
+\\
+
+$C= \{y \mid y = Ax, x\in K \}$ is a closed convex set.
+Let $\{x \mid Ax = b, x\in K \}$ be empty. i.e $b \notin C$. By strict separating hyperplane theorem, $\exists \lambda \in \Rn$ such that 
+\[ \inrpd{\lambda}{b} > \inrpd{\lambda}{y}\; \forall y \in C\]
+Using the definition of $C$, we have 
+\[ \inrpd{\lambda}{b} > \inrpd{\lambda}{Ax} =  \inrpd{A^*\lambda}{x}\; \forall x \in K\]
+Thus $\inrpd{A^*\lambda}{x}$ is bounded above $\forall x \in K$. Additionally $\inrpd{A^*\lambda}{x} \leq 0$ as otherwise $\inrpd{A^*\lambda}{\alpha x}$ can made as large as needed contradicting previous statement. Since $0 \in K$, $\inrpd{\lambda}{b} >0$. 
+Thus the set $\{\lambda \mid  -A^* \lambda \in K^*, \inrpd{b}{\lambda} >0\}$ is non empty.
+$\square$
+
+\paragraph{Proof of 2:}
+Let  $\{(\lambda,s) \mid c - A^*\lambda  = s \in K \}$  has a  feasible solution $(\bar{\lambda},\bar{s})$ and  $\bar{x} \in K^*$ be such that $A\bar{x} = 0$. Then 
+\[
+\inrpd{\bar{s}}{\bar{x}} =  \inrpd{c - A^*\bar{\lambda} }{\bar{x}} = \inrpd{c}{\bar{x}} - \inrpd{ A^*\bar{\lambda} }{\bar{x}}
+= \inrpd{c}{\bar{x}} - \inrpd{ \bar{\lambda} }{A\bar{x}} = \inrpd{c}{\bar{x}} \geq 0
+\]
+Thus $\{x \mid Ax = 0, x\in K^*, \inrpd{c}{x} < 0 \}$ has no feasible solution.
+\\
+
+
+$C' = \{t \mid t = A^*\lambda  + s, \lambda \in \Rn, s \in K \}$ is a closed convex set. Let $\{(\lambda,s) \mid c - A^*\lambda  = s \in K \}$  has no feasible solution. i.e $c \notin C'$.
+By strict separating hyperplane theorem, $\exists x \in V$ such that 
+\[ \inrpd{x}{c} < \inrpd{x}{t}\; \forall t \in C'\]
+Using the definition of $C'$, we have 
+\[ \inrpd{x}{c} < \inrpd{x}{s + A^*\lambda} = \inrpd{x}{s}  + \inrpd{x}{A^*\lambda}
+ =  \inrpd{x}{s}  + \inrpd{Ax}{\lambda}
+\; \forall \lambda \in \Rn,  s \in K
+\]
+Thus $\inrpd{x}{s + A^*\lambda}$ is bounded below $\forall \lambda \in \Rn, s \in K$. Additionally $\inrpd{x}{s + A^*\lambda} \geq 0$ as otherwise $\inrpd{x}{\alpha s + \alpha A^*\lambda}$ can made as small as needed contradicting previous statement. Since $0 \in K$, $\inrpd{x}{c} <0$. 
+
+
+Also, $\inrpd{x}{A^*\lambda} = 0$ as otherwise $\inrpd{x}{ s + A^*\lambda}$ can be made negative.
+Therefore $\inrpd{x}{A^*\lambda} = \inrpd{Ax}{\lambda} = 0$. Thus $Ax = 0$ and $\inrpd{x}{s} \geq 0 \; \forall s \in K$ or equivalently $x \in K^*$.
+This proves that $\{x \mid Ax = 0, x\in K^*, \inrpd{c}{x} < 0 \}$ is non empty.
+$\square$
 
 
 
