@@ -1,0 +1,31 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=1.25in,
+ right=1.25in,
+ top=1.25in,
+ bottom=1.25in,
+ }
+\usepackage{graphicx}
+%\usepackage[T1]{fontenc}
+%\usepackage{todonotes}
+%\usepackage{graphicx}
+
+\begin{document}
+
+\title{Foregound Extraction using GrabCut}
+\author{Sasank Chilamkurthy - 110070051\\Tharun Kumar Reddy - 110070048\\Rajeev Puppala - 110070055}
+\date{\today}
+\maketitle
+
+In our project, we propose to implement GrabCut algorithm\cite{main}. This is a segmentation algorithm. 
+In this, user selects a rectangle roughly around the required foreground and the algorithm outputs the foreground segmented out very precisely. This works by modelling background and then using it to do a graph cut like segmentation. This algorithm produces visibly better results than many of its competitors like Adobe Photoshop's Magic Wand.
+
+\begin{thebibliography}{4}
+
+\bibitem{main}  Rother, Carsten, Vladimir Kolmogorov, and Andrew Blake.``Grabcut: Interactive foreground extraction using iterated graph cuts." ACM Transactions on Graphics (TOG) 23.3 (2004): 309-314.
+\end{thebibliography}
+
+\end{document}

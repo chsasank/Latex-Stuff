@@ -1,0 +1,38 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=1.25in,
+ right=1.25in,
+ top=1.25in,
+ bottom=1.25in,
+ }
+\usepackage{graphicx}
+%\usepackage[T1]{fontenc}
+%\usepackage{todonotes}
+%\usepackage{graphicx}
+
+\begin{document}
+
+\title{Financial Applications of Convex Optimization}
+\author{Sasank Chilamkurthy, Ashok Vardhan}
+\date{March 3, 2015}
+\maketitle
+
+We propose to implement the problem of portfolio optimization with transaction costs.
+This is discussed in \cite{main}. Authors in \cite{main} discuss various constraints and transaction cost models some of which can make the problem non-convex. In such cases, a convex relaxation is used. 
+
+A survey of financial applications is available in \cite{survey}.
+We will implement, experiment and analyse this problem using the data from the real world.
+
+\begin{thebibliography}{4}
+
+\bibitem{main}  Lobo, Miguel Sousa, Maryam Fazel, and Stephen Boyd. "Portfolio optimization with linear and fixed transaction costs." Annals of Operations Research 152, no. 1 (2007): 341-365.
+
+\bibitem{survey} Li, Ao, and Levent Tuncel. "Some applications of symmetric cone programming in financial mathematics." Transactions on Operational Research 17 (2006): 1-19.
+
+\end{thebibliography}
+
+
+\end{document}
