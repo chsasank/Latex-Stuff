@@ -1,0 +1,309 @@
+% resume.tex
+%
+% (c) 2002 Matthew Boedicker <mboedick@mboedick.org> (original author) http://mboedick.org
+% (c) 2003 David J. Grant <dgrant@ieee.org> http://www.davidgrant.ca
+% (c) 2007 Todd C. Miller <Todd.Miller@courtesan.com> http://www.courtesan.com/todd
+% (c) 2009-2012 Derek R. Hildreth <derek@derekhildreth.com> http://www.derekhildreth.com 
+%This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/1.0/ or send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
+
+% GENERAL NOTE:  There may be some notes specific to myself.  If you're only interested in my LaTeX source or it doesn't make sense, please disregard it.
+
+\documentclass[a4paper,10pt]{article}
+\title{2-Page-tech}
+
+%-----------------------------------------------------------
+\usepackage[a4paper]{geometry}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage[pdftex]{hyperref}
+\usepackage{enumitem}
+
+
+\hypersetup{
+    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=black 
+    %urlcolor=mygreylink     % can put red here to better visualize the links
+}
+\urlstyle{same}
+\definecolor{mygrey}{gray}{.85}
+\definecolor{mygreylink}{gray}{.40}
+\textheight=9.0in
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Adjust margins
+%\addtolength{\oddsidemargin}{-0.375in}
+%\addtolength{\evensidemargin}{0.375in}
+%\addtolength{\textwidth}{0.5in}
+%\addtolength{\topmargin}{-0.375in}
+%\addtolength{\textheight}{0.75in}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=0.75in,
+ right=0.75in,
+ top=0.75in,
+ bottom=0.75in,
+ }
+
+
+\setlist[itemize]{label = {--}}
+
+%-----------------------------------------------------------
+%Custom commands
+\newcommand{\resitem}[1]{\item #1 \vspace{-2pt}}
+
+\newcommand{\resheading}[1]{
+	{\large \colorbox{mygrey}{\begin{minipage}{\textwidth}{\textbf{#1 \vphantom{p\^{E}}}}\end{minipage}}}
+}
+
+\newcommand{\ressubheading}[4]{
+	\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+		\textbf{#1} & #2 \\
+		\textit{#3} & \textit{#4} \\
+	\end{tabular*}\vspace{-6pt}
+}
+
+\newcommand{\ressubheadingWithGuide}[3]{%
+
+	\textbf{#1} \hfill \textit{#2}\null\\
+	\textit{\small #3} %
+	\vspace{-4pt}
+}
+%\newcommand{\ressubheadingWithGuide}[3]{
+%	\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+%			\textbf{#1} & \textit{#2} \vspace{-2pt}\\ 
+%			\textit{\footnotesize #3} &
+%	\end{tabular*}\vspace{-6pt}
+%}
+%\newcommand{\ressubheadingother}[2]{
+%	\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+%			\textbf{#1} & \textit{#2} \\
+%	\end{tabular*}\vspace{-6pt}
+%}
+\newcommand{\ressubheadingother}[2]{
+	\textbf{#1} \hfill \textit{#2}\null
+	\vspace{-4pt}
+}
+\newcommand{\ressubsubheading}[2]{
+\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+		\textit{#1} & \textit{#2} \\
+\end{tabular*}\vspace{-6pt}}
+
+%-----------------------------------------------------------
+%General Resume Tips
+%   No periods!  Technically, nothing in this document is a full sentence.
+%   Use parallelism by ending key words with the same thing,  i.e. "Coordinated; Designed; Communicated".
+%   More tips on bottom of this LaTeX document.
+%-----------------------------------------------------------
+
+\begin{document}
+
+
+\newcommand{\mywebheader}{
+\begin{tabular*}{7in}{l@{\extracolsep{\fill}}r}
+	\textbf{\href{http://home.iitb.ac.in/~sasank}{\LARGE Sasank Chilamkurthy}} & \href{mailto:sasankchilamkurthy@gmail.com}{sasankchilamkurthy@gmail.com}\\
+	\#603A, Gundecha Hills, Chandivali, Mumbai -- 400072, Ph: +91--9892727514  & \href{http://home.iitb.ac.in/~sasank}{http://home.iitb.ac.in/$\sim$sasank} \\
+	\end{tabular*}
+\\
+\vspace{0.1in}}
+
+% CHANGE HEADER SOURCE HERE
+\mywebheader
+%\vspace*{1.6in}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Education}
+	\ressubheadingWithGuide{Indian Institute of Technology, Bombay}{\textit{July 2011 - May 2015}}{Bachelors of Technology, Electrical Engineering with Honours}
+
+				{ 
+				\begin{description} \itemsep -1pt
+					\item[CPI] : 9.59/10
+					\item[Minor] : Mathematics
+					\item[Key Courses] : Foundations of Machine Learning, Convex Optimization, Stochastic Optimization, Computer Vision, Image Processing, Algorithms for Medical Image Processing, Advanced Probability and Random Processes, Graph Theory, Information Theory and Coding
+				\end{description}
+
+				}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Experience}
+	\ressubheadingWithGuide{Quantitative Researcher}{July 2015 - Present}{WorldQuant LLC, Mumbai}
+		\begin{itemize}\itemsep -1pt
+            \item Responsible for researching financial and mathematical literature and \textbf{analyzing various datasets} to seek out sources of inefficiencies, convert them to \textbf{predictive profitable model} alpha with robust performance having high Sharpe ratios and significant abnormal returns
+			\item Concentrated mainly on seeking \textbf{alphas for trading in equity market} which are used in developing algorithmic daily rebalancing long-short trading strategies on US, Europe, Japan and other markets
+	    	\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\resheading{Internships and Research Experience}
+	\ressubheadingWithGuide{Resolution of Crossing Fibers in Diffusion Tensor MRI Images using Sparsity}{Spring 2015}{R\&D Project, Prof. Suyash P. Awate, IIT Bombay}
+	\begin{itemize} \itemsep -1pt
+		\item Proposed an iterative reweighting algorithm extending \textbf{Non-Negative Sparse Coding} to better extract underlying overcomplete dictionary
+		\item Solved resolution of crossing fibers problem in diffusion tensor MRI using \textbf{Compressive Sensing}
+		\item Extended compressive sensing solution using a iterative reweighted algorithm to better levarage sparsity pattern of fiber crossings
+	\end{itemize}
+
+	\ressubheadingWithGuide{Scheduling for Energy Harvesting Wireless Networks}{Autumn 2014}{B.Tech Project, Prof. Abhay Karandikar, IIT Bombay}
+	\begin{itemize} \itemsep -1pt
+		\item Simulated a point to point communications link which is powered by a battery recharged with energy harvested from renewable source with random fluctuations
+		\item Showed through simulations that average expected throughput over slots admit a quasi concave relation with waterlevel parameter of water-filling policy
+		\item Proposed a \textbf{Stochastic Approximation algorithm} based on infinitesimal perturbation analysis to \textbf{maximize throughput} of such link
+	\end{itemize}
+ 
+	\ressubheadingWithGuide{Coded Modulation for Coherent Optical Communication Systems}{Summer 2014}{Internship, Prof. LA Rusch, Centre d'optique,photonique et laser (COPL), Quebec}
+    	\begin{itemize}\itemsep -1pt
+      		\item \textbf{Simulated} 16 QAM coherent modulation for optical communication system in \textbf{MATLAB} and performed \textbf{Monte-Carlo} simulations to obtain BER vs OSNR curves for various lasers and signal constellations
+			\item Collected raw data from back-to-back \textbf{experiments} and extracted phase data from raw data with offline carrier \textbf{Phase Recovery DSP} algorithms
+			\item Analysed this data to evaluate the coding gain of \textbf{Multi-level coded modulation} (MLCM) for a constellation designed to mitigate ENOB limitations of DAC used in modulation
+		\end{itemize}
+
+	\ressubheadingWithGuide{Fractional Fourier Transform and Chirp Parameter Estimation}{Summer 2013}{Internship, Prof. V.M.Gadre, IIT Bombay}
+	  	\begin{itemize}\itemsep -1pt
+	    	\item Surveyed literature on Fractional Fourier Transform and on various ways to discretize it
+	        \item \textbf{Formulated} and \textbf{proved} correctness of a \textbf{DSP algorithm} to estimate chirp parameters from noisy samples. Evaluated accuracy of the algorithm in presence of noise by simulating the setup in MATLAB
+			\item Proved \textbf{Uncertainity Principle} for a new generalised transform extending fractional Fourier transforms
+		\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Scholastic Achievements} 
+	\begin{itemize}\itemsep -1pt
+	    	\item Received \textbf{Undergraduate Research Award} for outstanding research on Fractional Fourier Transform under supervision of Prof. VM Gadre, IIT Bombay
+			\item Awarded \textbf{Institute Academic Prize} for exceptional academic performance in the year 2013-14
+			\item \textbf{One of 14} selected from India for \textbf{ITCSC-INC Winter School} 2014 organized by Chinese University of Hong Kong on Information Theory
+			\item Ranked \textbf{28th} in India in \textbf{IIT JEE} 2011 exam taken by more than 500,000 students
+			\item Secured \textbf{3rd rank} in \textbf{EAMCET} 2011 written by 300,000 students
+			%\item Scored \textbf{422} out of \textbf{450} marks in BITSAT 2011
+			\item Won \textbf{Gold medal} in Indian National \textbf{Chemistry Olympiad} and attended the Orientation cum Selection Camp for International Chemistry Olympiad 2011
+			\item Among the \textbf{Top 300} in the country to be selected for Indian national \textbf{Physics} olympiad and Indian national \textbf{Astronomy} olympiad 
+    \end{itemize}				
+	
+%%%%%%%%%%%%%%%%%%%%%    
+\resheading{Academic Projects}
+	\ressubheadingWithGuide{Interactive Foreground Extraction using Iterated Graph-Cuts}{Spring 2015}{Computer Vision, Prof. Ajit Rajwade, IIT Bombay}
+			\begin{itemize} \itemsep -1pt
+				\item Extracted foreground from image where foreground is loosely indicated by drawing a box around it
+				\item Modeled foreground/background intensities using \textbf{Gaussian Mixture Models} and formulated \textbf{discrete optimization} problem on graph (Graph-Cuts) using these models to iteratively solve for segmentation
+			\end{itemize}
+
+	\ressubheadingWithGuide{Portfolio Optimization with Linear and Fixed Transaction Costs}{Spring 2015}{Convex Optimization, Prof. Ganesh Ramakrishnan, IIT Bombay}
+		\begin{itemize} \itemsep -1pt
+				\item Formulated portifolio optimization as a \textbf{convex optimization problem} with linear transaction costs and constraints on exposure to risk, short-sell constraints, etc.
+				\item Solved \textbf{non-convex problem} of portifolio optimization with fixed transaction costs approximately using a \textbf{heurstic} solving a number of related convex problem
+		\end{itemize}
+
+	\ressubheadingWithGuide{Compressive Sensing for Magnetic Resonance Imaging (MRI)}{Spring 2015}{Algorithms for Medical Image Processing, Prof. Suyash P. Awate, IIT Bombay}
+		\begin{itemize} \itemsep -1pt
+				\item Decreased number of measurements required for Magnetic Resonance Imaging (MRI) using \textbf{Iteratively Reweighted Least Squares} (IRLS) Algorithm for Compressive Sensing
+				\item Reconstructed \textbf{cardiac MRI} images using this algorithm
+		\end{itemize}
+
+	\ressubheadingWithGuide{Traffic Sign Recognition using various Machine Learning Techniques}{Autumn 2014}{Digital Image Processing, Prof. Ajit Rajwade, IIT Bombay}
+	    \begin{itemize} \itemsep -1pt
+			\item Trained classifiers using challenging \textbf{German Traffic Sign Recognition Database} cotaining traffic sign photos of various sizes in various lightings
+			\item Implemented \textbf{Random Forests}, \textbf{Linear Discriminant Analysis} and \textbf{Fisher's Linear Discriminant} on \textbf{Histogram of Oriented Gradients}(HOG) features to achieve test set classification accuracy of $97\%$
+		\end{itemize}
+
+	\ressubheadingWithGuide{LZW compression algorithm and decoding LDPC codes}{Spring 2014}{Data Structures \& Algorithms, Prof. Ganesh Ramakrishnan, IIT Bombay}
+		\begin{itemize}\itemsep -1pt
+	    	\item Programmed \textbf{Lempel-Zev-Welch} compression and uncompression algorithm in \textbf{Java} and achieved about \textbf{50 \% compression} ratio in the compressing large text files
+			\item Implemented decoding of \textbf{LDPC codes} using \textbf{sum-product algorithm} in Java using specially designed data structure: Factor Graph
+		\end{itemize}
+
+
+	\ressubheadingWithGuide{Pipelined ARM Processor}{Spring 2014}{Processor Design, Prof. Virendra Singh, IIT Bombay}
+    	\begin{itemize}\itemsep -1pt
+	    	\item Architected a \textbf{6-stage pipelined} processor based on the \textbf{ARM7TDMI} Instruction Set
+			\item Simulated the execution of instructions after designing the processor using \textbf{Verilog HDL}
+		\end{itemize}
+
+
+	\ressubheadingWithGuide{Wireless Communication using Amplitude Shift Keying (ASK)}{Autumn 2013}{Communications Lab, Prof. J.Mukherjee, IIT Bombay}
+    	\begin{itemize}\itemsep -1pt
+	        \item Designed \textbf{Analog circuits} for ASK modulation and demodulation for medium wave band and transmitted and received the modulated waveforms wirelessly through  \textbf{monopole antennae}
+	        \item Used a microcontroller to send bit data and another to receive the data using \textbf{UART protocol} over this channel, thereby transmitting a text message wirelessly
+        \end{itemize}
+
+	\ressubheadingWithGuide{Photodetection using LEDS}{\textit{Spring 2013}}{Digital Cicuits Lab, Prof. S.Lodha, IIT Bombay}
+		\begin{itemize}\itemsep -1pt
+			\item Used LEDs to \textbf{sense light} rather than using photodiodes using a lesser known technique
+			\item Described hardware using \textbf{Verilog} and implemented it on \textbf{FPGA} to sense light incident on LED array
+			\item Displayed the pattern of incident light on \textbf{graphic LCD} accurately
+		\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Positions of Responsibility}
+
+	\ressubheadingother{Teaching Assistant}{}
+
+	\begin{description} [labelindent=*] \itemsep -1pt
+		\item[MA 105]: Calculus \hfill \textit{Autumn 2012,13,14}
+		\item[MA 106]: Linear Algebra \hfill \textit{Spring 2014}
+		\item[MA 108]: Differential equations\hfill \textit{Spring 2014}
+	\end{description}
+	\vspace{-15pt}
+	\begin{itemize}
+		\item \textbf{Tutored} 40 strength class \textbf{once a week} clarifying doubts among other duties like scrutinizing quizzes
+	\end{itemize}
+
+
+	\ressubheadingother{Joint Secretary, Electrical Engineering Students Association}{2013-14}
+	\begin{itemize} \itemsep -1pt
+		\item Restructured the policy of SPAS to streamlined functioning in coordination with \textbf{50 professors} which led to a 50 \% increase in number of projects floated and a \textbf{70 \% increase} in successfully completed projects
+		\item Planned and successfully executed 2 outings for 300 students handling a budget of \textbf{INR 1,20,000}
+	\end{itemize}
+
+	\ressubheadingother{Publicity Manager, Aagomani 2013, Annual festival of EE Department}{2012-13}
+	\begin{itemize}\itemsep -1pt
+		\item Increased outreach of events leading to increase in footfall by 200\% by handling budget of \textbf{INR 30,000}  
+		\item Collaborated with Technophilia in publicizing in colleges all over India
+	\end{itemize}
+	
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Extra-Curricular Activities}
+	\begin{itemize}[label={--}]\itemsep -1pt
+		\item Attended NSERC summer school on \textbf{effective communication} at McGill university, Montreal. Practiced presenting \textbf{status reports} and \textbf{pitching in a project} in presence of industry experts.
+		\item Awarded \textit{bien} grade in Basic \textbf{French} course attested by Alliance Francaise de Bombay
+		\item Attended the \textbf{Annual Training Camp} organised by 2, MAH Regiment NCC and passed the ‘B’ certificate examination under the authority of Ministry of Defence, Govt. of India
+		\item \textbf{Coordinator} for competitions group of Techfest 2012. Planned and organised the event International Robotics Challenge which had 300 participants from over 5 countries
+	\end{itemize}
+
+\end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% GENERAL RESUME NOTES %
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Need to brush up on the skills section?  Here are some really good ideas:
+
+% - Communication: The ability to express and interpret ideas and convey knowledge. 
+% Skills like speaking effectively, writing concisely, listening attentively, expressing ideas, 
+% reporting information, editing, interviewing, and facilitating group discussion. 
+ 
+% - Research and Planning: The ability to search for specific knowledge and formulate a 
+% program for a definite course of action. Skills like forecasting, predicting, identifying 
+% issues, finding alternatives, gathering information, solving problems, setting goals, 
+% extracting information, and developing strategies. 
+ 
+% - Human Relations: The ability to apply interpersonal skills to resolve conflict, relate to 
+% people, and help people. Skills like providing support for others, listening, delegating 
+% with respect, representing others, asserting, developing rapport, and perceiving 
+% feelings. 
+ 
+% - Management, Organization, Leadership: The ability to supervise others and guide 
+% individuals and groups towards the completion of tasks. Skills like managing groups, 
+% selling ideas, making decisions, managing conflict, coordinating tasks, teaching, 
+% enlisting help. 
+
+% Source: 
+% http://www.squawkfox.com/2009/03/08/6-action-words-that-make-your-resume-rock/
+
+% Other Resources: 
+% http://www.tvmier.com/Resume_Education.html
+
