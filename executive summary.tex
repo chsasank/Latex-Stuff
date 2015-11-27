@@ -1,0 +1,131 @@
+\documentclass[a4paper]{article}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=1.25in,
+ right=1.25in,
+ top=1.25in,
+ bottom=1.25in,
+ }
+\usepackage{graphicx}
+%\usepackage[T1]{fontenc}
+%\usepackage{todonotes}
+%\usepackage{graphicx}
+
+\begin{document}
+
+\title{Leaf Scanner}
+\author{Vikash Challa\\Sasank Chilamkurthy\\Preetham Sreenivas\\Rohith Kishan}
+\date{\today}
+\maketitle
+
+\section{Introduction}
+India's diversity in the variety of soil and climate make it one of the few countries in the world where almost any seed can grow. Due to lack of information and quality inputs, Productivity of Indian farms is quite low when compared to other countries. This situation can be improved by using Good Agricultural Practices (hereby referred to as GAP). These are a set of simple measures that can be taken by the farmer to increase yield. Many farmers don’t have this information. There is a glaring information gap between the expert and the farmer. We are trying to solve this problem. 
+
+\section{Product Description}
+\subsection{Concept}
+Suppose you are a farmer. You are not completely aware of the latest agricultural practices. You have found a spot on a leaf and you are concerned that it’s a disease and want to take appropriate measures to stop the outbreak. 
+\begin{description}
+\item[Current Scenario] If you can afford, you hire an expert to have a look. If you cannot, you take the leaf to a pesticide/insecticide dealer and ask him to suggest a pesticide/insecticide or a remedy in general. The dealer is not an expert and may not have correct information and may suggest the wrong remedy. If the remedy is wrong, then you lose a lot of time and money in this process.
+
+\item[Proposed Solution] A mobile application wherein you can upload the picture of that leaf and using machine learning the application detects the disease, suggests remedies and provides a marketplace to buy required genuine agri-inputs. 
+This application will also feed you with academically approved set of guidelines for a crop called \emph{Good Agricultural Practices} (GAP) which will significantly improve the yields of your crop which a typical farmer like you is unaware of.
+It will also give you access to agricultural experts working with your crop.
+This application is what we are trying to build. 
+
+\end{description}
+	
+\subsection{Feasibility}
+The accuracy mentioned in a few early research papers we have gone through is surprisingly high (around 80\%- 90\%).
+We have a collection of pictures of banana leaves. Our dataset is small with about 100 pictures. 
+Currently, we are able to get an accuracy of 80\% with this small dataset and using simple algorithms.
+This can be hugely improved if we can get our hands on a larger dataset and by using more complex algorithms. 
+
+\subsection{Flow of usage}
+Described below is how we see a typical farmer will use our app. 
+
+\begin{description}
+\item[Step 1] He feeds in the name of his crop (eg. banana, turmeric) and the date on which he wants to sow seeds.  
+
+\item[Step 2] We provide him with timely information about Good Agricultural Practices(GAP) so that he can increase the yield. 
+\item[Step 3] If he notices some spot on the leaves or suspects that the leaf is infected, he 
+ uploads multiple images of leaves. We use machine learning and imageprocessing
+ to determine if the leaf is infact infected. If it is, we tell him what the disease is, the stage of the disease and a remedy. 
+He can also buy the pesticide/insecticide directly from our app. 
+\item[Step 4] We give him timely updates on how to manage the disease.
+\end{description}
+
+
+\subsection{Current Stage of Development}
+We have built a bare bones product, which consists of an android app and backend with disease classification support. 
+On the app, a user can take a picture of a leaf and we determine if the leaf is infected using machine learning and image processing.
+Our classifier has around 80 \% accuracy at the moment.
+Right now, banana is the only crop we support.
+
+We are in conversation with a few FPO managers and farmers, a Nabard AGM, an agri-input company and a few agricultural experts. We have a setup ready for product iterations to achieve product-market fit.
+
+\subsection{Intellectual Property}
+We initially plan to hire experts to classify the farmer uploaded images to classify the disease.
+These photos and corresponding diseases will form a dataset for our algorithm.
+This dataset and the algorithm will be our intellectual property and should be hard to replicate.
+
+
+\section{Customer/Market Analysis}
+\subsection{Customer Segments}
+These are our target customer segments: 
+
+\begin{enumerate}
+\item Farmers affiliated with producer organizations like FPOs and agri-focused NGOs
+\item Large\footnote{Farmers with more than 4.5 hectares} individual farmers growing cash crops
+\item Pesticide, fungicides, chemicals and other agri-input companies
+\end{enumerate}
+
+Our current product iterations are centred around farmers who are affiliated with \emph{FPOs}. An FPO (Farmer producer organisation) is a democratic, member-owned, self governing producer organisation which is promoted by the Govt of India through NABARD\footnote{National Bank for Agriculture and Rurual Development} with the vision to tackle the fragmentation problem in India.
+
+We are currently focusing on \textbf{banana} for our MVP. This is because banana farmers are usually economically well off and have been traditionally early adopters of new agricultural technologies like tissue culture.
+
+
+\subsection{Market Size}
+Total Indian agro-chemical market is projected to be \$6.8 bn by FY2017. 
+
+Since our initial target segment is FPO affiliated farmers, we'll give an estimate of market size of this segment. Each FPO typically consists of 500 -- 2000 registered farmers. In 2014, there were around 200 FPO's registered. The current trend suggests that there will be a minimum of 1000 FPOs by the end of 2016.
+
+\begin{itemize}
+\item[] An average FPO has 1000 farmers and it is projected that there will be about 1000 FPOs
+\item[] So our total number of customers are 1000*1000.
+\item[] Average cultivated land for our target customer $\sim$  5 acres (= 2 hectares)
+\item[] Average investment per acre on pesticides, fungicides and other chemicals is $\sim$ 30K INR (depends on crop)
+\item[] So, Market potential for a FPO based product is $1000000 \times 5 \times 30000 \times 0.15 \approx 22.5$ billion INR = \$375 million
+\end{itemize}
+
+So our initial target market size is around \$375 million. Typical margins in this industry range from 20-30\%.
+
+\section{Competition}
+There are a few companies like agro-star and snapdeal who are trying to bring the Indian agro-chemical market online. 
+A company called Farms-n-Farmers is trying to optimize the whole vertical through face to face personal assistance. 
+However, we are not aware of any firm which classifies leaf images using machine learning and is trying to bridge farmer-expert information gap through technology.
+
+Computer vision based algorithm will be our primary differentiation.
+
+
+\section{Team}
+
+\begin{description}
+\item[Preetham] 2015 CS UG, IITB, Backend Developer and ML systems. CEO. 
+\item[Sasank] 2015 EE UG, IITB, computer vision expert.
+\item[Vikash] 2015 CS UG, IITB, ML and android developer.
+\item[Rohith] 2015 CS UG, IITB, Android design and development
+\end{description}
+
+\subsection{Advisors}
+\begin{description}
+\item[PV Ramana] Assistant Director, Horticulture, Andhra Pradesh.
+\item[AV Bhavani Shankar] Assistant General Manager, NABARD, Andhra Pradesh.
+\end{description}
+We also contacted Prof. Rajwade of CSE dept, IITB for help with machine learning algorithm.
+
+\section{Revenue}
+Our primary revenue is dealer's cut through sale of agri-chemicals which is expected to be around 15\%. Also, we are evaluating freemium model where we add additional functionalities like personalized expert advice, soil testing etc.
+
+\end{document}
