@@ -1,0 +1,261 @@
+% resume.tex
+%
+% (c) 2002 Matthew Boedicker <mboedick@mboedick.org> (original author) http://mboedick.org
+% (c) 2003 David J. Grant <dgrant@ieee.org> http://www.davidgrant.ca
+% (c) 2007 Todd C. Miller <Todd.Miller@courtesan.com> http://www.courtesan.com/todd
+% (c) 2009-2012 Derek R. Hildreth <derek@derekhildreth.com> http://www.derekhildreth.com 
+%This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/1.0/ or send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
+
+% GENERAL NOTE:  There may be some notes specific to myself.  If you're only interested in my LaTeX source or it doesn't make sense, please disregard it.
+
+\documentclass[a4paper,10pt]{article}
+\title{2-Page-tech}
+
+%-----------------------------------------------------------
+\usepackage[a4paper]{geometry}
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage[pdftex]{hyperref}
+\usepackage{enumitem}
+
+
+\hypersetup{
+    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=black 
+    %urlcolor=mygreylink     % can put red here to better visualize the links
+}
+\urlstyle{same}
+\definecolor{mygrey}{gray}{.85}
+\definecolor{mygreylink}{gray}{.40}
+\textheight=9.0in
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Adjust margins
+%\addtolength{\oddsidemargin}{-0.375in}
+%\addtolength{\evensidemargin}{0.375in}
+%\addtolength{\textwidth}{0.5in}
+%\addtolength{\topmargin}{-0.375in}
+%\addtolength{\textheight}{0.75in}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=0.75in,
+ right=0.75in,
+ top=0.75in,
+ bottom=0.75in,
+ }
+
+
+\setlist[itemize]{label = {--}}
+
+%-----------------------------------------------------------
+%Custom commands
+\newcommand{\resitem}[1]{\item #1 \vspace{-2pt}}
+
+\newcommand{\resheading}[1]{
+	{\large \colorbox{mygrey}{\begin{minipage}{\textwidth}{\textbf{#1 \vphantom{p\^{E}}}}\end{minipage}}}
+}
+
+\newcommand{\ressubheading}[4]{
+	\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+		\textbf{#1} & #2 \\
+		\textit{#3} & \textit{#4} \\
+	\end{tabular*}\vspace{-6pt}
+}
+
+\newcommand{\ressubheadingWithGuide}[3]{%
+
+	\textbf{#1} \hfill \textit{#2}\null\\
+	\textit{\small #3} %
+	\vspace{-4pt}
+}
+%\newcommand{\ressubheadingWithGuide}[3]{
+%	\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+%			\textbf{#1} & \textit{#2} \vspace{-2pt}\\ 
+%			\textit{\footnotesize #3} &
+%	\end{tabular*}\vspace{-6pt}
+%}
+%\newcommand{\ressubheadingother}[2]{
+%	\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+%			\textbf{#1} & \textit{#2} \\
+%	\end{tabular*}\vspace{-6pt}
+%}
+\newcommand{\ressubheadingother}[2]{
+	\textbf{#1} \hfill \textit{#2}\null
+	\vspace{-4pt}
+}
+\newcommand{\ressubsubheading}[2]{
+\begin{tabular*}{6.5in}{l@{\extracolsep{\fill}}r}
+		\textit{#1} & \textit{#2} \\
+\end{tabular*}\vspace{-6pt}}
+
+%-----------------------------------------------------------
+%General Resume Tips
+%   No periods!  Technically, nothing in this document is a full sentence.
+%   Use parallelism by ending key words with the same thing,  i.e. "Coordinated; Designed; Communicated".
+%   More tips on bottom of this LaTeX document.
+%-----------------------------------------------------------
+
+\begin{document}
+
+
+\newcommand{\mywebheader}{
+\begin{tabular*}{7in}{l@{\extracolsep{\fill}}r}
+	\textbf{{\LARGE Preetham Sreenivas}} & \href{mailto:p2s2.b4u@gmail.com}{p2s2.b4u@gmail.com}\\
+	\#603A, Gundecha Hills, Chandivali, Mumbai -- 400072, Ph: +91--07738987378  & \\
+	\end{tabular*}
+\\
+\vspace{0.1in}}
+
+% CHANGE HEADER SOURCE HERE
+\mywebheader
+%\vspace*{1.6in}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Education}
+	\ressubheadingWithGuide{Indian Institute of Technology, Bombay}{\textit{July 2011 - May 2015}}{Bachelors of Technology}
+
+				{ 
+				\begin{description} \itemsep -1pt
+					\item[Major] : Computer Science and Engineering
+					\item[Key Courses] : Artifical Intelligence, Machine Learning, Applied Algorithms for Large Data, Parallel Computing, Graph Theory, Databases, Advanced Databases
+				\end{description}
+
+				}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Experience}
+	\ressubheadingWithGuide{Software Engineer}{July 2015 - Present}{Directi, Mumbai}
+		\begin{itemize}\itemsep -1pt
+            \item Developed a system similar to Google News using clustering algorithms and text feature extraction			
+			\item  Involved with the core ad serving team. Responsible for developing prototypes for managing various bottlenecks.
+			\item Converted a critical component of a core api into node.js which cut it's response times to one-fourth 
+	    	\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\resheading{Internships and Research Experience}
+	\ressubheadingWithGuide{Emulator Cloud}{Summer 2014}{Internship, Shinoj Zacharias, IBM India}
+	\begin{itemize} \itemsep -1pt
+		\item Developed a prototype for Emulator Cloud - A farm of android emulators running on the cloud which is one of the vital components of IBM’s upcoming Mobile testing as a service (mTaas).
+		\item Worked with Java, REST, IBM UrbanCode Deploy and the autoscaling features provided by Softlayer Cloud.
+	\end{itemize}
+
+	\ressubheadingWithGuide{Prediction Models for energy consumption of servers}{Autumn 2014}{B.Tech Project, Prof. Umesh Bellur and Prof. Purushottam Kulkarni, CSE, IIT Bombay}
+	\begin{itemize} \itemsep -1pt
+		\item Memory subsystem takes about 20\% of the total power. Research project aims at understanding energyconsumption of servers using PMU’s to monitor workloads and build an accurate prediction model taking into account the power consumed by the memory subsystem which is ignored by existing models
+		\item Involved working with kernel programming, machine learning and power measurement instruments.
+		\item Green Computing - Using this model, the research aims at developing power and cost efficient virtual machine placement techniques in computing clouds and data centres.
+ 	\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Scholastic Achievements} 
+	\begin{itemize}\itemsep -1pt
+	    	\item Secured \textbf{All India Rank 10} in \textbf{Indian National Mathematics Olympiad}, was invited to the International Mathematics Olympiad Training camp for being in the top 30.
+			\item Awarded \textbf{Gold Medal} for being in the top 35 of the country in \textbf{Indian National Chemistry Olympiad} and was invited to the Orientation-cum-selection-camp for International Chemistry Olympiad.
+			\item Secured \textbf{All India Rank 9} in VITEEE out of 200,000 students.
+			\item Secured \textbf{All India Rank 344} in IIT-JEE out of 520,000 students.
+			\item \textbf{Ranked 14} in Mathematics Talent Test conducted by Association of Mathematics Teachers of India.
+			\item Secured \textbf{State Rank 1} in Science Talent Search Exam conducted by A.S.Rao Awards Council.
+			\item Secured \textbf{high distinctions} for two consecutive years in IAIS (International Assessments for Indian Schools) conducted by University of New South Wales, Australia.
+    \end{itemize}				
+	
+%%%%%%%%%%%%%%%%%%%%%    
+\resheading{Academic Projects}
+	\ressubheadingWithGuide{Artificial Intelligence}{Spring 2014}{Artificial Intelligence, Prof. Pushpak Bhattacharya, IIT Bombay}
+			\begin{itemize} \itemsep -1pt
+				\item Presented a seminar after conducting a literature survey on Turing test and emergence of Chatterbots
+				\item Implemented feed forward neural network with backpropagation and used it for sentiment analysis over twitter feed and various test data
+				\item Implemented A* algorithm to solve 8-puzzles problem and compared different heuristics and bi-directional search
+			\end{itemize}
+
+	\ressubheadingWithGuide{File System Implementation}{Spring 2014}{Operating Systems, Prof. Dhananjay Dhamdhere, IIT Bombay}
+		\begin{itemize} \itemsep -1pt
+				\item Designed and developed a fully functional file system having its own data block allocation scheme,directory structure, IO cache and permission control
+				\item Implemented system calls to read, write, create, delete and move les, folders and links
+		\end{itemize}
+
+	\ressubheadingWithGuide{Control Flow Graph Language Processor}{Spring 2014}{Implementation of Programming Languages, Prof. Uday Khedkar, IIT Bombay}
+		\begin{itemize} \itemsep -1pt
+				\item Redesigned a compiler to generate executable MIPS assembly code from GCC tree cfg (Control Flow Graph) dumps
+				\item Enhanced the basic implementation to provide support for Floating point numbers, common arithmetic operations, intraprocedural control flow statem
+		\end{itemize}
+
+	\ressubheadingWithGuide{Readers Zone}{Autumn 2013}{Databases and Information Systems, Prof. Umesh Bellur, IIT Bombay}
+	    \begin{itemize} \itemsep -1pt
+			\item Developed a web application similar to GoodReads on php, mysql
+			\item Designed the ER model, converted them into Relational Model and normalized the entities used for storing the users \& books data along with the relations
+		\end{itemize}
+
+	\ressubheadingWithGuide{Buffer Overflow}{Autumn 2013}{Computer Architecture, Prof. Bernard Menezes, IIT Bombay}
+		\begin{itemize}\itemsep -1pt
+	    	\item Buffer Overflow is a software vulnerbility where a program, while writing data excedes its boundary and overwrites adjacent memory
+			\item Exploited the same anomaly and implemented the buffer overflow attack in C++
+		\end{itemize}
+
+
+	\ressubheadingWithGuide{Text Only Web Browser}{Autumn 2012}{Processor Design, Prof. Varsha Apte, IIT Bombay}
+    	\begin{itemize}\itemsep -1pt
+	    	\item Developed a terminal based text-only web browser
+			\item Used the text to tag ratio in a web-page to extract text and render it
+		\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Technical Skills}
+\begin{description}
+\item[Operating Systems] : Windows, Linux
+\item[Programming Language]: C, C++, Java, Python, Scheme
+\item[Software Proficiency]: Shell scripting, Eclipse, Scilab, LaTeX, SQL
+\item[Web] : HTML, CSS, PHP, REST, SOAP.
+\end{description}
+	
+%%%%%%%%%%%%%%%%%%%%%%
+\resheading{Extra-Curricular Activities}
+	\begin{itemize}[label={--}]\itemsep -1pt
+		\item VR1 Organization - Core Member of vr1forever , an NGO with a mission to bring harmony in the society. It currently provides home to hundreds of orphans and provides them with value-based education, Helps empower youth in India by conducting various workshops, Activities.
+		\item Attended Basic Mountaineering Course conducted by ABVIMAS for a period of 26 days in the Himalayas
+		\item Proficient in Indian classical Violin
+		\item Represented Hostel 8 at the Institute Football General Championship and Institute Badminton General Championship.
+	\end{itemize}
+
+\end{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% GENERAL RESUME NOTES %
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Need to brush up on the skills section?  Here are some really good ideas:
+
+% - Communication: The ability to express and interpret ideas and convey knowledge. 
+% Skills like speaking effectively, writing concisely, listening attentively, expressing ideas, 
+% reporting information, editing, interviewing, and facilitating group discussion. 
+ 
+% - Research and Planning: The ability to search for specific knowledge and formulate a 
+% program for a definite course of action. Skills like forecasting, predicting, identifying 
+% issues, finding alternatives, gathering information, solving problems, setting goals, 
+% extracting information, and developing strategies. 
+ 
+% - Human Relations: The ability to apply interpersonal skills to resolve conflict, relate to 
+% people, and help people. Skills like providing support for others, listening, delegating 
+% with respect, representing others, asserting, developing rapport, and perceiving 
+% feelings. 
+ 
+% - Management, Organization, Leadership: The ability to supervise others and guide 
+% individuals and groups towards the completion of tasks. Skills like managing groups, 
+% selling ideas, making decisions, managing conflict, coordinating tasks, teaching, 
+% enlisting help. 
+
+% Source: 
+% http://www.squawkfox.com/2009/03/08/6-action-words-that-make-your-resume-rock/
+
+% Other Resources: 
+% http://www.tvmier.com/Resume_Education.html
+
